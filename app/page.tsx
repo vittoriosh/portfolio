@@ -1,103 +1,216 @@
-import Image from "next/image";
+'use client'
+
+import { Button } from "@/components/ui/button"
+import { Github, Linkedin, Mail } from "lucide-react"
+import Link from "next/link"
+import Navigation from "@/components/Navigation"
+import { motion } from "motion/react"
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="h-screen bg-green-950 overflow-hidden">
+      <Navigation />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      {/* Hero Section */}
+      <main className="h-screen flex items-center px-4 sm:px-6 py-4">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full max-w-7xl mx-auto">
+          {/* Left Column - Text Content */}
+          <motion.div 
+            className="space-y-3 sm:space-y-4 lg:space-y-6"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <motion.div 
+              className="space-y-1 sm:space-y-2 lg:space-y-3"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                whileHover={{ scale: 1.05 }}
+              >
+              </motion.div>
+              
+              <motion.h1 
+                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-amber-50 leading-tight"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Crafting Digital
+                <motion.span 
+                  className="text-amber-200"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6, delay: 0.8 }}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    textShadow: "0 0 20px rgba(251, 191, 36, 0.5)" 
+                  }}
+                >
+                  {" "}Experiences
+                </motion.span>
+              </motion.h1>
+              
+              <motion.p 
+                className="text-lg sm:text-xl lg:text-2xl text-amber-100/80 leading-relaxed"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+              >
+                I build elegant, user-centric web applications with modern technologies. 
+                Passionate about product strategy and exceptional user experiences.
+              </motion.p>
+            </motion.div>
+
+
+            {/* Social Links */}
+            <motion.div 
+              className="flex items-center space-x-3 sm:space-x-4 lg:space-x-6 pt-2 sm:pt-3 lg:pt-6"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1 }}
+            >
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-amber-100 hover:text-amber-200 hover:bg-green-800/50"
+                  asChild
+                >
+                  <Link href="https://github.com/vittorio-sh" target="_blank" rel="noopener noreferrer">
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                    >
+                      <Github className="h-5 w-5" />
+                    </motion.div>
+                  </Link>
+                </Button>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: -5 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-amber-100 hover:text-amber-200 hover:bg-green-800/50"
+                  asChild
+                >
+                  <Link href="https://www.linkedin.com/in/vittorio-s-b711952b7" target="_blank" rel="noopener noreferrer">
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+                    >
+                      <Linkedin className="h-5 w-5" />
+                    </motion.div>
+                  </Link>
+                </Button>
+              </motion.div>
+              
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-amber-100 hover:text-amber-200 hover:bg-green-800/50"
+                  asChild
+                >
+                  <Link href="mailto:vittorio.shiffman@gmail.com">
+                    <motion.div
+                      animate={{ y: [0, -3, 0] }}
+                      transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.5 }}
+                    >
+                      <Mail className="h-5 w-5" />
+                    </motion.div>
+                  </Link>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column - Top Right Stacked Navigation - Hidden on Mobile */}
+          <motion.div 
+            className="hidden md:flex absolute right-0 top-0 flex-col items-end justify-start space-y-2 sm:space-y-3 lg:space-y-4 pr-3 sm:pr-4 lg:pr-6 pt-12 sm:pt-14 lg:pt-16"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Read our docs
-          </a>
+            <motion.div
+              className="flex items-center"
+            >
+              <Link href="/projects">
+                <motion.h2
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-amber-100/60 hover:text-amber-200 cursor-pointer transition-colors duration-300"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    color: "#fbbf24",
+                    textShadow: "0 0 30px rgba(251, 191, 36, 0.5)" 
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  Projects
+                </motion.h2>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center"
+            >
+              <Link href="/contact">
+                <motion.h2
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-amber-100/60 hover:text-amber-200 cursor-pointer transition-colors duration-300"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    color: "#fbbf24",
+                    textShadow: "0 0 30px rgba(251, 191, 36, 0.5)" 
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  Contact
+                </motion.h2>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              className="flex items-center"
+            >
+              <Link href="/about">
+                <motion.h2
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-8xl font-bold text-amber-100/60 hover:text-amber-200 cursor-pointer transition-colors duration-300"
+                  whileHover={{ 
+                    scale: 1.1, 
+                    color: "#fbbf24",
+                    textShadow: "0 0 30px rgba(251, 191, 36, 0.5)" 
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                >
+                  About
+                </motion.h2>
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
+
+
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
