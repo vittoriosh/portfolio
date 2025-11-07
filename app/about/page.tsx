@@ -253,7 +253,7 @@ export default function About() {
               {selectedExperience === "southampton" && (
                 <div>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                    <h3 className="text-xl sm:text-2xl font-bold text-amber-100">Software Developer</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-amber-100">Product Engineer</h3>
                     <Badge className="bg-amber-100/10 text-amber-200 border-amber-200/20 mt-2 sm:mt-0">
                       September 2024 - Current
                     </Badge>
@@ -290,7 +290,7 @@ export default function About() {
               {selectedExperience === "prizm" && (
                 <div>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
-                    <h3 className="text-xl sm:text-2xl font-bold text-amber-100">Frontend Developer & Co-Creator</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-amber-100">Design Engineer</h3>
                     <Badge className="bg-amber-100/10 text-amber-200 border-amber-200/20 mt-2 sm:mt-0">
                       2024
                     </Badge>
@@ -299,11 +299,10 @@ export default function About() {
                   
                   <ul className="space-y-3">
                     {[
-                      "Designed and built the main customer-facing website, focusing on user experience and conversion optimization to drive product adoption.",
-                      "Built website functionality to allow workers to sign in and control SEO, add blogs, and manage content through an admin dashboard.",
-                      "Led frontend development of the core application, translating complex AI capabilities into intuitive user interfaces that healthcare professionals could easily adopt.",
-                      "Facilitated cross-functional collaboration between development and business teams, ensuring product features aligned with market needs and user requirements.",
-                      "Created user journey maps and wireframes to guide product development and ensure seamless user experiences across the platform."
+                      "Built and designed the user-facing website, focusing on user experience and conversion optimization to drive product adoption.",
+                      "Set up an internal application for the marketing team to handle blogs, SEO controls, and content management through an admin dashboard.",
+                      "Designed and built multiple user interfaces for the Prizm AI application, translating complex AI capabilities into intuitive user experiences.",
+                      "Led the design and implementation of the main KPI card component with multiple interactive charts, providing key business insights at a glance."
                     ].map((item, index) => (
                       <motion.li
                         key={index}
@@ -399,8 +398,8 @@ export default function About() {
             >
               <h3 className="text-xl font-bold text-amber-100 mb-6">Select Experience</h3>
               {[
-                { id: "southampton", name: "South Hampton Financials", role: "Software Developer", period: "Sep 2024 - Current", type: "Full Time" },
-                { id: "prizm", name: "Prizm AI", role: "Frontend Developer & Co-Creator", period: "2024", type: "Contractor" },
+                { id: "southampton", name: "South Hampton Financials", role: "Product Engineer", period: "Sep 2024 - Current", type: "Full Time" },
+                { id: "prizm", name: "Prizm AI", role: "Design Engineer", period: "2024", type: "Contractor" },
                 { id: "portoptix", name: "PortOptix", role: "Full-Stack Developer", period: "2024", type: "Contractor" },
                 { id: "alteri", name: "Alteri Insurance", role: "Software Developer", period: "2024", type: "Contractor" }
               ].map((company, index) => (

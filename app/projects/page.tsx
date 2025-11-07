@@ -71,20 +71,12 @@ export default function Projects() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  textShadow: "0 0 20px rgba(251, 191, 36, 0.5)" 
+                }}
               >
-                My
-                <motion.span 
-                  className="text-amber-200"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.8 }}
-                  whileHover={{ 
-                    scale: 1.05, 
-                    textShadow: "0 0 20px rgba(251, 191, 36, 0.5)" 
-                  }}
-                >
-                  {" "}Projects
-                </motion.span>
+                Projects
               </motion.h1>
               
               <motion.p 
@@ -228,9 +220,9 @@ export default function Projects() {
                 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                onClick={() => document.getElementById('virtumed-section')?.scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => document.getElementById('portoptix-section')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Virtumed
+                PortOptix
               </motion.h2>
             </motion.div>
           </motion.div>
@@ -336,18 +328,18 @@ export default function Projects() {
                       Insura
                     </h3>
                     <p className="text-amber-200/70 text-sm sm:text-base font-medium">
-                      Next-Gen Insurance Platform
+                      Demo App - Modern Quote Tunnel Vision
                     </p>
                   </div>
 
                   <p className="text-amber-100/80 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    A revolutionary insurance platform featuring instant quote generation, 
-                    seamless payment processing, and unified policy management with live demo capabilities.
+                    A demonstration application developed to showcase a modern quote tunnel vision, 
+                    designed to illustrate innovative approaches to insurance quoting and user experience.
                   </p>
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {["Next.js", "React", "TypeScript", "Stripe", "AWS"].map((tech) => (
+                    {["Next.js", "React", "TypeScript", "Stripe"].map((tech) => (
                       <span
                         key={tech}
                         className="px-3 sm:px-4 py-2 bg-amber-200/10 border border-amber-200/20 text-amber-200 text-sm rounded-full"
@@ -388,11 +380,11 @@ export default function Projects() {
             <div id="prizm-section" className="bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-700/30 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
                 {/* Project Image */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-purple-500/10 to-purple-600/10 flex items-center justify-center">
+                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-purple-500/10 to-purple-600/10 flex items-center justify-center h-48 sm:h-56 lg:h-80">
                   <img
-                    src="/prizm.jpeg"
-                    alt="Prizm AI Platform"
-                    className="w-full h-48 sm:h-56 lg:h-80 object-cover rounded-2xl"
+                    src="/company_logos/logo_prizmAI_clr_pos.svg"
+                    alt="Prizm AI Logo"
+                    className="w-3/4 h-3/4 object-contain rounded-2xl"
                   />
                 </div>
 
@@ -408,8 +400,9 @@ export default function Projects() {
                   </div>
 
                   <p className="text-amber-100/80 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    An innovative AI platform designed to revolutionize how users interact with artificial intelligence. 
-                    Features advanced machine learning capabilities, intuitive interfaces, and seamless integration.
+                    Built and designed components for the company and built the main user-facing site. 
+                    Prizm AI is an AI-powered finance team platform that automates FP&A work using specialized AI agents 
+                    that analyze data, write narratives, and answer questions.
                   </p>
 
                   {/* Tech Stack */}
@@ -437,15 +430,15 @@ export default function Projects() {
               </div>
             </div>
 
-            {/* Project 3 - Virtumed */}
-            <div id="virtumed-section" className="bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-700/30 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm">
+            {/* Project 3 - PortOptix */}
+            <div id="portoptix-section" className="bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-700/30 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
                 {/* Project Image */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-green-500/10 to-green-600/10 flex items-center justify-center">
+                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-green-500/10 to-green-600/10 flex items-center justify-center h-48 sm:h-56 lg:h-80">
                   <img 
-                    src="/virtumedcover.jpeg" 
-                    alt="Virtumed Medical Platform"
-                    className="w-full h-48 sm:h-56 lg:h-80 object-contain"
+                    src="/company_logos/PortOptix_Logo.avif" 
+                    alt="PortOptix Platform"
+                    className="w-3/4 h-3/4 object-contain"
                   />
                 </div>
 
@@ -453,21 +446,23 @@ export default function Projects() {
                 <div className="space-y-4 sm:space-y-6">
                   <div>
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-amber-100 mb-2 sm:mb-3">
-                      Virtumed
+                      PortOptix
                     </h3>
                     <p className="text-amber-200/70 text-sm sm:text-base font-medium">
-                      Virtual Medical Platform
+                      Full-Stack Development Platform
                     </p>
                   </div>
 
                   <p className="text-amber-100/80 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    A comprehensive virtual medical platform connecting patients with healthcare 
-                    providers through secure video consultations and digital health management.
+                    Designed the site and developed key components for the company. 
+                    PortOptix is the first AI platform built specifically for private equity funds and their portfolio companies. 
+                    It optimizes vendor spending across portfolio companies, boosting EBITDA performance and unlocking significant 
+                    additional value at exit through intelligent vendor analysis and strategic procurement optimization.
                   </p>
 
                   {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {["React", "Next.js", "TypeScript", "Node.js", "MongoDB"].map((tech) => (
+                    {["React", "Next.js", "TypeScript", "Supabase", "Node.js"].map((tech) => (
                       <span
                         key={tech}
                         className="px-3 sm:px-4 py-2 bg-amber-200/10 border border-amber-200/20 text-amber-200 text-sm rounded-full"
@@ -477,15 +472,13 @@ export default function Projects() {
                     ))}
                   </div>
 
-                  {/* CTA Buttons */}
+                  {/* CTA Buttons - Disabled */}
                   <div className="pt-2">
                     <Button 
-                      className="w-full bg-amber-700 text-white font-medium rounded-xl py-3 sm:py-4 text-sm sm:text-base"
-                      asChild
+                      className="w-full bg-gray-600 text-gray-300 font-medium rounded-xl py-3 sm:py-4 text-sm sm:text-base cursor-not-allowed"
+                      disabled
                     >
-                      <Link href="https://virtumed2.vercel.app/" target="_blank" rel="noopener noreferrer">
-                        View Live Demo
-                      </Link>
+                      Coming Soon
                     </Button>
                   </div>
                 </div>
