@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react"
 import { useState } from "react"
+import Image from "next/image"
 
 const techLogos = [
   { name: "React", color: "from-cyan-400 to-blue-500", icon: "/logos/react.png" },
@@ -30,8 +31,8 @@ export default function AnimatedTechLogos() {
             stiffness: 100,
             damping: 15
           }}
-          whileHover={{ 
-            scale: 1.1, 
+          whileHover={{
+            scale: 1.1,
             rotateY: 15,
             z: 50
           }}
@@ -69,7 +70,7 @@ export default function AnimatedTechLogos() {
                 repeatType: "reverse"
               }}
             />
-            
+
             {/* Logo image */}
             <motion.div
               className="relative z-10 flex items-center justify-center"
@@ -78,17 +79,15 @@ export default function AnimatedTechLogos() {
               }}
               transition={{ duration: 0.2 }}
             >
-              <img 
-                src={tech.icon} 
-                alt={tech.name}
-                className="w-12 h-12 object-contain drop-shadow-lg"
-                style={{ 
-                  filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-                  backgroundColor: 'rgba(255,255,255,0.1)',
-                  borderRadius: '8px',
-                  padding: '4px'
-                }}
-              />
+              <div className="w-12 h-12 relative flex items-center justify-center p-1 bg-white/10 rounded-lg drop-shadow-lg overflow-hidden">
+                <Image
+                  src={tech.icon}
+                  alt={tech.name}
+                  width={40}
+                  height={40}
+                  className="object-contain"
+                />
+              </div>
             </motion.div>
 
             {/* Hover effect overlay */}
@@ -106,9 +105,9 @@ export default function AnimatedTechLogos() {
                   <motion.div
                     key={i}
                     className="absolute w-1 h-1 bg-white rounded-full"
-                    initial={{ 
-                      x: "50%", 
-                      y: "50%", 
+                    initial={{
+                      x: "50%",
+                      y: "50%",
                       opacity: 0,
                       scale: 0
                     }}

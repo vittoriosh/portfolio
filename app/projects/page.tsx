@@ -2,514 +2,453 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Github, Linkedin, Mail } from "lucide-react"
+import { ArrowUpRight, Users, Building2, TrendingUp, LayoutDashboard, LineChart } from "lucide-react"
 import Link from "next/link"
 import Navigation from "@/components/Navigation"
 import { motion } from "motion/react"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { useState } from "react"
+import Image from "next/image"
 
 export default function Projects() {
-  const [selectedCompany, setSelectedCompany] = useState<{name: string, url: string} | null>(null)
-
-  const handleCompanyClick = (company: {name: string, url: string}) => {
-    setSelectedCompany(company)
-  }
-
-  const handleConfirmVisit = () => {
-    if (selectedCompany) {
-      window.open(selectedCompany.url, '_blank', 'noopener,noreferrer')
-      setSelectedCompany(null)
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-green-950">
-      <Navigation />
+    <div className="min-h-screen bg-green-950 text-amber-50 selection:bg-amber-500/30">
 
-      {/* Hero Section */}
-      <main className="h-screen flex items-center px-4 sm:px-6 py-4">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full max-w-7xl mx-auto">
-          {/* Left Column - Text Content */}
-          <motion.div 
-            className="space-y-3 sm:space-y-4 lg:space-y-6"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+      {/* Header Section */}
+      <section className="relative z-50 bg-green-950 rounded-b-[60px] sm:rounded-b-[100px] pb-24 shadow-2xl border-b border-white/5">
+        <Navigation />
+        <div className="pt-20 px-4 sm:px-6 max-w-7xl mx-auto">
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            <motion.div 
-              className="space-y-1 sm:space-y-2 lg:space-y-3"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Badge 
-                  variant="secondary" 
-                  className="bg-amber-100/10 text-amber-200 border-amber-200/20 hover:bg-amber-100/20 transition-colors"
-                >
-                  Portfolio
-                </Badge>
-              </motion.div>
-              
-              <motion.h1 
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold text-amber-50 leading-tight"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  textShadow: "0 0 20px rgba(251, 191, 36, 0.5)" 
-                }}
-              >
-                Projects
-              </motion.h1>
-              
-              <motion.p 
-                className="text-lg sm:text-xl lg:text-2xl text-amber-100/80 leading-relaxed"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-              >
-                A collection of my recent work showcasing full-stack development, 
-                modern web technologies, and creative problem-solving.
-              </motion.p>
-            </motion.div>
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+              <h1 className="text-6xl sm:text-8xl md:text-9xl font-bold tracking-tight">
+                Selected<br />Works
+              </h1>
 
-            {/* Social Links */}
-            <motion.div 
-              className="flex items-center space-x-3 sm:space-x-4 lg:space-x-6 pt-2 sm:pt-3 lg:pt-6"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-            >
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-amber-100 hover:text-amber-200 hover:bg-green-800/50"
-                  asChild
-                >
-                  <Link href="https://github.com/vittorio-sh" target="_blank" rel="noopener noreferrer">
-                    <motion.div
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
-                    >
-                      <Github className="h-5 w-5" />
-                    </motion.div>
-                  </Link>
-                </Button>
-              </motion.div>
-              
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: -5 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-amber-100 hover:text-amber-200 hover:bg-green-800/50"
-                  asChild
-                >
-                  <Link href="https://www.linkedin.com/in/vittorio-s-b711952b7" target="_blank" rel="noopener noreferrer">
-                    <motion.div
-                      animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </motion.div>
-                  </Link>
-                </Button>
-              </motion.div>
-              
-              <motion.div
-                whileHover={{ scale: 1.1, rotate: 5 }}
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-amber-100 hover:text-amber-200 hover:bg-green-800/50"
-                  asChild
-                >
-                  <Link href="mailto:vittorio.shiffman@gmail.com">
-                    <motion.div
-                      animate={{ y: [0, -3, 0] }}
-                      transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.5 }}
-                    >
-                      <Mail className="h-5 w-5" />
-                    </motion.div>
-                  </Link>
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-
-          {/* Right Column - Top Right Stacked Navigation - Hidden on Mobile */}
-          <motion.div 
-            className="hidden md:flex absolute right-0 top-0 flex-col items-end justify-start space-y-4 sm:space-y-5 lg:space-y-6 pr-3 sm:pr-4 lg:pr-6 pt-20 sm:pt-24 lg:pt-28 z-10"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <motion.div
-              className="flex items-center"
-            >
-              <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-amber-100/60 hover:text-amber-200 cursor-pointer transition-colors duration-300"
-                whileHover={{ 
-                  scale: 1.1, 
-                  color: "#fbbf24",
-                  textShadow: "0 0 30px rgba(251, 191, 36, 0.5)" 
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                onClick={() => document.getElementById('insura-section')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Insura
-              </motion.h2>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center"
-            >
-              <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-amber-100/60 hover:text-amber-200 cursor-pointer transition-colors duration-300"
-                whileHover={{ 
-                  scale: 1.1, 
-                  color: "#fbbf24",
-                  textShadow: "0 0 30px rgba(251, 191, 36, 0.5)" 
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                onClick={() => document.getElementById('prizm-section')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Prizm AI
-              </motion.h2>
-            </motion.div>
-
-            <motion.div
-              className="flex items-center"
-            >
-              <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-amber-100/60 hover:text-amber-200 cursor-pointer transition-colors duration-300"
-                whileHover={{ 
-                  scale: 1.1, 
-                  color: "#fbbf24",
-                  textShadow: "0 0 30px rgba(251, 191, 36, 0.5)" 
-                }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                onClick={() => document.getElementById('portoptix-section')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                PortOptix
-              </motion.h2>
-            </motion.div>
+              {/* Quick Nav */}
+              <nav className="hidden lg:block mb-4">
+                <ul className="space-y-3 border-l border-amber-50/10 pl-8">
+                  {[
+                    { id: "project-01", num: "01", name: "South Hampton" },
+                    { id: "project-02", num: "02", name: "Onlia Portal" },
+                    { id: "project-03", num: "03", name: "PortOptix" },
+                    { id: "project-04", num: "04", name: "CIBC Insurance" },
+                    { id: "project-05", num: "05", name: "Prizm AI" },
+                  ].map((item) => (
+                    <li key={item.id}>
+                      <button
+                        onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' })}
+                        className="group flex items-center gap-4 text-amber-50/40 hover:text-amber-200 transition-all duration-300 transform hover:translate-x-1"
+                      >
+                        <span className="font-mono text-sm tracking-tighter opacity-60">
+                          {item.num}
+                        </span>
+                        <span className="text-xs sm:text-sm font-bold uppercase tracking-[0.15em]">
+                          {item.name}
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+            <div className="h-px w-full bg-amber-50/20 mt-8 mb-8" />
+            <div className="flex justify-between items-end">
+              <p className="text-xl sm:text-2xl max-w-3xl leading-relaxed text-amber-50/80">
+                Product Designer & Engineer crafting high-scale digital experiences. Specializing in complex multi-tenant ecosystems for startups and private equity.
+              </p>
+              <span className="hidden sm:block font-mono text-amber-50/60">(2023 — 2025)</span>
+            </div>
           </motion.div>
         </div>
-      </main>
+      </section>
 
-      {/* Company Carousel Section */}
-      <section className="py-12 sm:py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      {/* Project 01 - Commercial Insurance Portal */}
+      <section id="project-01" className="relative z-40 bg-[#283655] -mt-20 pt-40 pb-32 rounded-b-[60px] sm:rounded-b-[100px] px-4 sm:px-6 shadow-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto">
           <motion.div
-            className="text-center mb-8 sm:mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8 }}
+            className="group"
           >
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-amber-100 mb-2 sm:mb-3">
-              Companies I&apos;ve Worked With
-            </h2>
-            <p className="text-amber-200/70 text-sm sm:text-base lg:text-lg">
-              Trusted by leading organizations across various industries
-            </p>
-          </motion.div>
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
+              <div className="w-full lg:w-2/5 space-y-8 top-32 lg:sticky">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-[#EAF1F6]/60">01 / Enterprise</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#EAF1F6]/40 border border-[#EAF1F6]/20 px-2 py-0.5 rounded">South Hampton Financials</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold leading-tight group-hover:text-white transition-colors">
+                    Commercial Insurance Portal
+                  </h2>
+                </div>
 
-          {/* Carousel Container */}
-          <div className="relative overflow-hidden">
-            <motion.div
-              className="flex space-x-8 sm:space-x-12 lg:space-x-16"
-              animate={{
-                x: [0, -100 * 6] // Move by 6 logo widths
-              }}
-              transition={{
-                x: {
-                  repeat: Infinity,
-                  repeatType: "loop",
-                  duration: 25,
-                  ease: "linear",
-                },
-              }}
-            >
-              {/* Duplicate logos for seamless loop */}
-              {[...Array(2)].map((_, setIndex) => (
-                <div key={setIndex} className="flex space-x-8 sm:space-x-12 lg:space-x-16">
-                  {[
-                    { name: "Southampton Financial", logo: "/company_logos/southampton_financial_inc_logo.jpeg", url: "https://www.southamptonfinancial.ca/" },
-                    { name: "Prizm AI", logo: "/company_logos/logo_prizmAI_clr_pos.svg", url: "#" },
-                    { name: "Onlia", logo: "/company_logos/onlia.png", url: "https://www.onlia.ca/" },
-                    { name: "PortOptix", logo: "/company_logos/PortOptix_Logo.avif", url: "https://www.portoptix.com/" },
-                    { name: "Alteri", logo: "/company_logos/alterilogo.webp", url: "https://www.alteri.ca/" },
-                    { name: "UBC", logo: "/company_logos/ubc-logo.jpg", url: "https://www.ubc.ca/" }
-                  ].map((company, index) => (
-                    <motion.div
-                      key={`${setIndex}-${index}`}
-                      className="flex-shrink-0 flex items-center justify-center"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                    >
-                      <div 
-                        className="bg-white/20 backdrop-blur-sm border border-amber-200/10 rounded-2xl p-4 sm:p-6 lg:p-8 w-36 sm:w-44 lg:w-52 h-24 sm:h-28 lg:h-32 flex items-center justify-center cursor-pointer"
-                        onClick={() => handleCompanyClick(company)}
-                      >
-                        <img
-                          src={company.logo}
-                          alt={company.name}
-                          className={`max-w-full max-h-full object-contain opacity-80 ${
-                            company.name === "Alteri" ? "brightness-50" : ""
-                          }`}
-                        />
-                      </div>
-                    </motion.div>
+                <div className="grid grid-cols-2 gap-6 py-6 border-y border-[#EAF1F6]/10">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-[#EAF1F6]">
+                      <Users className="h-5 w-5" />
+                      <span className="text-2xl font-bold">100k+</span>
+                    </div>
+                    <p className="text-sm text-[#EAF1F6]/60 font-mono">Active Users</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-[#EAF1F6]">
+                      <Building2 className="h-5 w-5" />
+                      <span className="text-2xl font-bold">3</span>
+                    </div>
+                    <p className="text-sm text-[#EAF1F6]/60 font-mono">Major Companies</p>
+                  </div>
+                </div>
+
+                <p className="text-lg text-[#EAF1F6]/80 leading-relaxed font-light">
+                  A high-scale enterprise solution revolutionizing commercial insurance processing.
+                  Designed and engineered a sophisticated multi-tenant architecture for South Hampton Financials,
+                  optimizing complex data workflows for over 100,000 active users across multiple major organizations.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["React", "TypeScript", "Enterprise", "Scale", "Multi-functional"].map((tag) => (
+                    <Badge key={tag} variant="outline" className="border-[#EAF1F6]/20 text-[#EAF1F6]/80 rounded-full px-4 py-1 hover:bg-white/10 transition-colors">
+                      {tag}
+                    </Badge>
                   ))}
                 </div>
-              ))}
-            </motion.div>
-          </div>
+              </div>
+
+              <div className="w-full lg:w-3/5 space-y-8 flex flex-col items-center">
+                <div className="w-full aspect-[16/9] bg-black/40 rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl transition-transform duration-500">
+                  {/* Clean Image Frame */}
+                </div>
+
+                <div className="w-full">
+                  <Link href="/projects/south-hampton" className="block w-full">
+                    <Button
+                      className="group w-full bg-[#EAF1F6] text-[#283655] hover:bg-white rounded-full py-8 font-mono text-sm uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_30px_rgba(234,241,246,0.15)] hover:shadow-[0_0_50px_rgba(234,241,246,0.3)]"
+                    >
+                      Explore Case Study
+                      <ArrowUpRight className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Projects Grid Section */}
-      <section className="px-4 sm:px-6 py-20">
+      {/* Project 02 - Onlia */}
+      <section id="project-02" className="relative z-30 bg-[#7A007A] -mt-20 pt-40 pb-32 rounded-b-[60px] sm:rounded-b-[100px] px-4 sm:px-6 shadow-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8 }}
+            className="group"
+          >
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
+              <div className="w-full lg:w-2/5 space-y-8 top-32 lg:sticky lg:order-2">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-white/70">02 / Consumer Platform</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-white border border-white/30 px-2 py-0.5 rounded bg-white/10">Onlia</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold leading-tight text-white transition-colors">
+                    Insurance Customer Portal
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 py-6 border-y border-white/20">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white">
+                      <Users className="h-5 w-5" />
+                      <span className="text-2xl font-bold">300k+</span>
+                    </div>
+                    <p className="text-sm text-white/70 font-mono">Total Users</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white">
+                      <TrendingUp className="h-5 w-5" />
+                      <span className="text-2xl font-bold">Retention</span>
+                    </div>
+                    <p className="text-sm text-white/70 font-mono">UI Optimization</p>
+                  </div>
+                </div>
+
+                <p className="text-lg text-white leading-relaxed font-light">
+                  Led the full-scale UI redesign and UX optimization for Onlia&apos;s core consumer insurance portal.
+                  Focused on resolving complex multi-step user flows to significantly reduce drop-off rates,
+                  achieving a 5% increase in conversion through methodical UI refactoring and user research.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["Next.js", "UI/UX", "Retention", "Insurtech"].map((tag) => (
+                    <Badge key={tag} variant="outline" className="border-white/20 text-white rounded-full px-4 py-1 hover:bg-white/10 transition-colors">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-full lg:w-3/5 space-y-8 flex flex-col items-center lg:order-1">
+                <div className="w-full aspect-[16/9] bg-black/20 rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl transition-transform duration-500">
+                  {/* Clean Image Frame */}
+                </div>
+
+                <div className="w-full">
+                  <Link href="/projects/onlia" className="block w-full">
+                    <Button
+                      className="group w-full bg-white text-[#7A007A] hover:bg-white/90 rounded-full py-8 font-mono text-sm uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]"
+                    >
+                      Explore Case Study
+                      <ArrowUpRight className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Project 03 - PortOptix */}
+      <section id="project-03" className="relative z-20 bg-[#FF4D00] -mt-20 pt-40 pb-32 rounded-b-[60px] sm:rounded-b-[100px] px-4 sm:px-6 shadow-2xl border-b border-white/5">
         <div className="max-w-7xl mx-auto">
-          
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 gap-6 md:gap-8">
-            {/* Project 1 - Insura */}
-            <div id="insura-section" className="bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-700/30 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-                {/* Project Image */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-blue-500/10 to-blue-600/10 flex items-center justify-center">
-                  <img 
-                    src="/insuraapp.jpeg" 
-                    alt="Insura Insurance Platform"
-                    className="w-full h-48 sm:h-56 lg:h-80 object-contain"
-                  />
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8 }}
+            className="group"
+          >
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
+              <div className="w-full lg:w-2/5 space-y-8 top-32 lg:sticky">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-white/70">03 / Private Equity</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-white border border-white/30 px-2 py-0.5 rounded">Uploading to Portfolio</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold leading-tight text-white transition-colors">
+                    PortOptix Dashboard
+                  </h2>
                 </div>
 
-                {/* Project Info */}
-                <div className="space-y-4 sm:space-y-6">
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-amber-100 mb-2 sm:mb-3">
-                      Insura
-                    </h3>
-                    <p className="text-amber-200/70 text-sm sm:text-base font-medium">
-                      Demo App - Modern Quote Tunnel Vision
-                    </p>
-                  </div>
-
-                  <p className="text-amber-100/80 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    A demonstration application developed to showcase a modern quote tunnel vision, 
-                    designed to illustrate innovative approaches to insurance quoting and user experience.
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {["Next.js", "React", "TypeScript", "Stripe"].map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 sm:px-4 py-2 bg-amber-200/10 border border-amber-200/20 text-amber-200 text-sm rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2">
-                    <div className="flex-1">
-                      <Button 
-                        className="w-full bg-amber-700 text-white font-medium rounded-xl py-3 sm:py-4 text-sm sm:text-base"
-                        asChild
-                      >
-                        <Link href="https://insura-five.vercel.app/" target="_blank" rel="noopener noreferrer">
-                          View Live Demo
-                        </Link>
-                      </Button>
+                <div className="grid grid-cols-2 gap-6 py-6 border-y border-white/20">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white">
+                      <LayoutDashboard className="h-5 w-5" />
+                      <span className="text-2xl font-bold">SaaS</span>
                     </div>
-                    <div className="flex-1">
-                      <Button 
-                        className="w-full bg-amber-700 text-white font-medium rounded-xl py-3 sm:py-4 text-sm sm:text-base"
-                        asChild
-                      >
-                        <Link href="/projects/insura-case-study">
-                          View Case Study
-                        </Link>
-                      </Button>
+                    <p className="text-sm text-white/70 font-mono">B2B Platform</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white">
+                      <LineChart className="h-5 w-5" />
+                      <span className="text-2xl font-bold">VC</span>
                     </div>
+                    <p className="text-sm text-white/70 font-mono">Backed</p>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Project 2 - Prizm AI */}
-            <div id="prizm-section" className="bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-700/30 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-                {/* Project Image */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-purple-500/10 to-purple-600/10 flex items-center justify-center h-48 sm:h-56 lg:h-80">
-                  <img
-                    src="/company_logos/logo_prizmAI_clr_pos.svg"
-                    alt="Prizm AI Logo"
-                    className="w-3/4 h-3/4 object-contain rounded-2xl"
+                <p className="text-lg text-white leading-relaxed font-light">
+                  A comprehensive dashboard solution built for high-growth startups and private equity firms.
+                  Streamlining complex portfolio management, performance tracking, and vendor optimization
+                  through an intuitive, data-dense interface designed for elite decision-makers.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["React", "Dashboard", "Private Equity", "Startups"].map((tag) => (
+                    <Badge key={tag} variant="outline" className="border-white/20 text-white rounded-full px-4 py-1 hover:bg-white/10 transition-colors">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-full lg:w-3/5 flex flex-col items-center space-y-8">
+                <div className="w-full aspect-[16/9] bg-white rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl transition-transform duration-500">
+                  <Image
+                    src="/images/portoptixphoto.jpeg"
+                    alt="PortOptix Dashboard"
+                    fill
+                    className="object-contain transition-opacity duration-500"
                   />
                 </div>
 
-                {/* Project Info */}
-                <div className="space-y-4 sm:space-y-6">
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-amber-100 mb-2 sm:mb-3">
-                      Prizm AI
-                    </h3>
-                    <p className="text-amber-200/70 text-sm sm:text-base font-medium">
-                      AI-Powered Platform
-                    </p>
-                  </div>
-
-                  <p className="text-amber-100/80 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    Built and designed components for the company and built the main user-facing site. 
-                    Prizm AI is an AI-powered finance team platform that automates FP&A work using specialized AI agents 
-                    that analyze data, write narratives, and answer questions.
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {["React", "Python", "TensorFlow", "OpenAI", "Next.js"].map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 sm:px-4 py-2 bg-amber-200/10 border border-amber-200/20 text-amber-200 text-sm rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA Buttons - Disabled */}
-                  <div className="pt-2">
-                    <Button 
-                      className="w-full bg-gray-600 text-gray-300 font-medium rounded-xl py-3 sm:py-4 text-sm sm:text-base cursor-not-allowed"
-                      disabled
+                <div className="w-full">
+                  <Link href="#" className="block w-full">
+                    <Button
+                      className="group w-full bg-white text-[#FF4D00] hover:bg-white/90 rounded-full py-8 font-mono text-sm uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]"
                     >
-                      Coming Soon
+                      Explore Case Study
+                      <ArrowUpRight className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
                     </Button>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>
-
-            {/* Project 3 - PortOptix */}
-            <div id="portoptix-section" className="bg-gradient-to-br from-green-900/20 to-green-800/10 border border-green-700/30 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center">
-                {/* Project Image */}
-                <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-green-500/10 to-green-600/10 flex items-center justify-center h-48 sm:h-56 lg:h-80">
-                  <img 
-                    src="/company_logos/PortOptix_Logo.avif" 
-                    alt="PortOptix Platform"
-                    className="w-3/4 h-3/4 object-contain"
-                  />
-                </div>
-
-                {/* Project Info */}
-                <div className="space-y-4 sm:space-y-6">
-                  <div>
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-amber-100 mb-2 sm:mb-3">
-                      PortOptix
-                    </h3>
-                    <p className="text-amber-200/70 text-sm sm:text-base font-medium">
-                      Full-Stack Development Platform
-                    </p>
-                  </div>
-
-                  <p className="text-amber-100/80 text-sm sm:text-base lg:text-lg leading-relaxed">
-                    Designed the site and developed key components for the company. 
-                    PortOptix is the first AI platform built specifically for private equity funds and their portfolio companies. 
-                    It optimizes vendor spending across portfolio companies, boosting EBITDA performance and unlocking significant 
-                    additional value at exit through intelligent vendor analysis and strategic procurement optimization.
-                  </p>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 sm:gap-3">
-                    {["React", "Next.js", "TypeScript", "Supabase", "Node.js"].map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-3 sm:px-4 py-2 bg-amber-200/10 border border-amber-200/20 text-amber-200 text-sm rounded-full"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* CTA Buttons - Disabled */}
-                  <div className="pt-2">
-                    <Button 
-                      className="w-full bg-gray-600 text-gray-300 font-medium rounded-xl py-3 sm:py-4 text-sm sm:text-base cursor-not-allowed"
-                      disabled
-                    >
-                      Coming Soon
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Confirmation Dialog */}
-      <AlertDialog open={!!selectedCompany} onOpenChange={() => setSelectedCompany(null)}>
-        <AlertDialogContent className="bg-green-900 border-green-700">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-amber-100">Visit Company Website?</AlertDialogTitle>
-            <AlertDialogDescription className="text-amber-200/80">
-              Are you sure you want to visit {selectedCompany?.name}&apos;s website? This will open in a new tab.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="bg-green-800 border-green-600 text-amber-100 hover:bg-green-700">
-              Cancel
-            </AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={handleConfirmVisit}
-              className="bg-amber-600 hover:bg-amber-700 text-white"
-            >
-              Visit Website
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      {/* Project 04 - CIBC */}
+      <section id="project-04" className="relative z-15 bg-[#A3000B] -mt-20 pt-40 pb-32 rounded-b-[60px] sm:rounded-b-[100px] px-4 sm:px-6 shadow-2xl border-b border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8 }}
+            className="group"
+          >
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
+              <div className="w-full lg:w-2/5 space-y-8 top-32 lg:sticky lg:order-2">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-white/70">04 / Banking & FinTech</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-white border border-white/30 px-2 py-0.5 rounded bg-white/10">CIBC</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold leading-tight text-white transition-colors">
+                    Insurance Portal Modernization
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 py-6 border-y border-white/20">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white">
+                      <Users className="h-5 w-5" />
+                      <span className="text-2xl font-bold">1M+</span>
+                    </div>
+                    <p className="text-sm text-white/70 font-mono">End Users</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-white">
+                      <TrendingUp className="h-5 w-5" />
+                      <span className="text-2xl font-bold">40%</span>
+                    </div>
+                    <p className="text-sm text-white/70 font-mono">Efficiency Gain</p>
+                  </div>
+                </div>
+
+                <p className="text-lg text-white leading-relaxed font-light">
+                  Orchestrating a massive UI/UX transformation for CIBC&apos;s national insurance platform.
+                  Focused on streamlining agent workflows and simplifying multi-product enrollment for millions
+                  of Canadians through a modern, high-performance responsive interface.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["Banking", "FinTech", "Enterprise", "High-Performance"].map((tag) => (
+                    <Badge key={tag} variant="outline" className="border-white/20 text-white rounded-full px-4 py-1 hover:bg-white/10 transition-colors">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-full lg:w-3/5 flex flex-col items-center space-y-8 lg:order-1">
+                <div className="w-full aspect-[16/9] bg-black/20 rounded-3xl overflow-hidden border border-white/10 relative shadow-2xl transition-transform duration-500">
+                  {/* Clean Image Frame */}
+                </div>
+
+                <div className="w-full">
+                  <Link href="#" className="block w-full">
+                    <Button
+                      className="group w-full bg-white text-[#A3000B] hover:bg-white/90 rounded-full py-8 font-mono text-sm uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_50px_rgba(255,255,255,0.3)]"
+                    >
+                      Explore Case Study
+                      <ArrowUpRight className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Project 05 - Prizm AI */}
+      <section id="project-05" className="relative z-10 bg-[#F8F4E9] -mt-20 pt-40 pb-32 rounded-b-[60px] sm:rounded-b-[100px] px-4 sm:px-6 shadow-2xl border-b border-[#1A1A1A]/5">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10%" }}
+            transition={{ duration: 0.8 }}
+            className="group"
+          >
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-20 items-start">
+              <div className="w-full lg:w-2/5 space-y-8 top-32 lg:sticky">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <span className="font-mono text-[#1A1A1A]/70 uppercase tracking-widest text-xs">05 / Artificial Intelligence</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-[#1A1A1A] border border-[#1A1A1A]/20 px-2 py-0.5 rounded bg-[#1A1A1A]/5">Prizm AI</span>
+                  </div>
+                  <h2 className="text-4xl sm:text-5xl font-bold leading-tight text-[#BC6448] transition-colors">
+                    Prizm AI Website
+                  </h2>
+                </div>
+
+                <div className="grid grid-cols-2 gap-6 py-6 border-y border-[#1A1A1A]/10">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-[#1A1A1A]">
+                      <TrendingUp className="h-5 w-5" />
+                      <span className="text-2xl font-bold">High</span>
+                    </div>
+                    <p className="text-sm text-[#1A1A1A]/60 font-mono">Conversion Rate</p>
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2 text-[#1A1A1A]">
+                      <Users className="h-5 w-5" />
+                      <span className="text-2xl font-bold">Demo</span>
+                    </div>
+                    <p className="text-sm text-[#1A1A1A]/60 font-mono">Signup Focus</p>
+                  </div>
+                </div>
+
+                <p className="text-lg text-[#1A1A1A]/80 leading-relaxed font-light">
+                  A high-performance marketing site designed for conversion and brand authority.
+                  Featuring advanced motion design, sophisticated typography, and a tailored user journey
+                  designed specifically for the next generation of global investment managers.
+                </p>
+
+                <div className="flex flex-wrap gap-2">
+                  {["AI", "Marketing", "Conversion", "Design"].map((tag) => (
+                    <Badge key={tag} variant="outline" className="border-[#1A1A1A]/20 text-[#1A1A1A]/80 rounded-full px-4 py-1 hover:bg-[#1A1A1A]/5 transition-colors">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+
+              <div className="w-full lg:w-3/5 flex flex-col items-center space-y-8">
+                <div className="w-full aspect-[16/9] bg-[#F8F4E9] rounded-3xl overflow-hidden border border-[#1A1A1A]/10 relative shadow-2xl transition-transform duration-500">
+                  <Image
+                    src="/images/prizmai.jpeg"
+                    alt="Prizm AI Website"
+                    fill
+                    className="object-cover transition-opacity duration-500"
+                  />
+                </div>
+
+                <div className="w-full">
+                  <Link href="#" className="block w-full">
+                    <Button
+                      className="group w-full bg-[#1A1A1A] text-white hover:bg-[#1A1A1A]/90 rounded-full py-8 font-mono text-sm uppercase tracking-[0.2em] transition-all duration-500 shadow-[0_0_30px_rgba(26,26,26,0.15)] hover:shadow-[0_0_50px_rgba(26,26,26,0.3)]"
+                    >
+                      Explore Case Study
+                      <ArrowUpRight className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
     </div>
   )
