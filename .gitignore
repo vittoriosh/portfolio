@@ -40,6 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 node_modules/
-public/
+# public/
 public/textures/
 public/virtumed*.png
