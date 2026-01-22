@@ -17,7 +17,200 @@ import {
 import SouthHamptonCaseStudy from "@/components/case-studies/south-hampton";
 import OnliaCaseStudy from "@/components/case-studies/onlia";
 
-export default function HomePage() {
+const LOGOS = [
+  { src: "/company_logos/alterilogo.webp", alt: "Alteri" },
+  { src: "/company_logos/logo_prizmAI_clr_pos.svg", alt: "PrizmAI" },
+  { src: "/company_logos/onlia.png", alt: "Onlia" },
+  { src: "/company_logos/southampton_financial_inc_logo.jpeg", alt: "Southampton" },
+  { src: "/company_logos/cibclogo.png", alt: "CIBC" },
+  { src: "/company_logos/aha+insurance+logo_blue.webp", alt: "Aha Insurance" }
+];
+
+const WORKS = [
+  {
+    id: "south-hampton",
+    title: "South Hampton Financials",
+    category: "Private Equity",
+    image: "/images/shfnew.png",
+    color: "from-blue-600/20",
+  },
+  {
+    id: "onlia",
+    title: "Onlia Portal Experience",
+    category: "Consumer Product",
+    image: "/images/onliagood.png",
+    color: "from-purple-600/20",
+  },
+  {
+    id: "portoptix",
+    title: "PortOptix Dashboard",
+    category: "Fintech & Venture",
+    image: "/images/portoptixphoto.jpeg",
+    color: "from-orange-600/20",
+    locked: true
+  },
+  {
+    id: "national-sync",
+    title: "National Insurance Sync",
+    category: "Banking & Fintech",
+    image: "/images/cib.png",
+    color: "from-red-600/20",
+    locked: true
+  },
+  {
+    id: "prizm-ai",
+    title: "Prizm AI Marketing",
+    category: "Intelligence System",
+    image: "/images/prizmai.jpeg",
+    color: "from-amber-600/20",
+    locked: true
+  },
+  {
+    id: "virtumed",
+    title: "VirtuMed",
+    category: "Healthcare Infrastructure",
+    image: "/virtumed2.png",
+    color: "from-cyan-600/20",
+    locked: true
+  }
+];
+
+const EXPERIENCES = [
+  {
+    id: "southampton",
+    company: "South Hampton Financials",
+    role: "Product Engineer",
+    period: "2024 — Present",
+    type: "Full Time",
+    description: "Leading frontend development for a high-scale customer portal serving 200k+ users.",
+    details: [
+      "Developed and maintained a high-performance customer portal serving over 200,000 users using React, JavaScript, HTML5, and CSS3.",
+      "Designed modular, reusable React components, streamlining future development and improving UI consistency.",
+      "Built and integrated RESTful APIs for core features including user login, policy lookup, and transaction history.",
+      "Implemented Google Analytics and marketing tracking integrations for user engagement insights.",
+      "Maintained and optimized CI/CD pipelines with Jenkins, pushing production builds to AWS Amplify."
+    ]
+  },
+  {
+    id: "prizm",
+    company: "Prizm AI",
+    role: "Design Engineer",
+    period: "2024",
+    type: "Contract",
+    description: "Designed and built the user-facing marketing site and internal admin tools.",
+    details: [
+      "Built and designed the user-facing website, focusing on conversion optimization.",
+      "Set up an internal application for the marketing team to handle blogs and SEO controls.",
+      "Designed and built multiple user interfaces for the Prizm AI application.",
+      "Led the design and implementation of the main KPI card component with interactive charts."
+    ]
+  },
+  {
+    id: "portoptix",
+    company: "PortOptix",
+    role: "Full-Stack Developer",
+    period: "2024",
+    type: "Contract",
+    description: "Hardened the application for scalability and improved user onboarding.",
+    details: [
+      "Worked closely with the CEO to harden the application for 1000+ active users.",
+      "Managed user growth and engagement metrics with data-driven strategies.",
+      "Designed and implemented a comprehensive user management system.",
+      "Set up Supabase database tables and implemented authentication workflows."
+    ]
+  },
+  {
+    id: "alteri",
+    company: "Alteri Insurance",
+    role: "Software Developer",
+    period: "2024",
+    type: "Contract",
+    description: "Prototyped a business insurance portal and rating engine.",
+    details: [
+      "Designed and prototyped a comprehensive business insurance portal.",
+      "Collaborated to design and implement a rating engine for insurance quoting.",
+      "Led user research initiatives to understand broker workflows.",
+      "Developed user personas and journey maps to guide product design."
+    ]
+  }
+];
+
+const REFERENCES = [
+  { name: "Steve Lloyd", title: "IT Director, South Hampton Financials" },
+  { name: "Christine Cousins", title: "Creative Director, South Hampton Financials" },
+  { name: "Kevin Mastriano", title: "CEO, Prizm AI" },
+  { name: "Jay Leib", title: "CEO, PortOptix" },
+  { name: "Adam Stecklov", title: "AI Researcher, Mila" },
+  { name: "Joe Collins", title: "Commodity Analyst, Minerva Project" },
+  { name: "Dr. Anderson", title: "Neurosurgeon" }
+];
+
+function AuthGate({ onAuth }: { onAuth: () => void }) {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === "495496") {
+      onAuth();
+    } else {
+      setError(true);
+      setPassword("");
+      setTimeout(() => setError(false), 2000);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[1000] bg-black flex items-center justify-center p-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md"
+      >
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl font-black uppercase tracking-tighter text-white mb-4">Vittorio Shiffman</h1>
+          <p className="text-white/40 uppercase tracking-[0.3em] text-[10px] font-bold italic font-serif">Product & Architecture Portfolio</p>
+        </div>
+
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div className="relative group">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter Access Key"
+              className={`w-full bg-white/5 border-2 ${error ? 'border-red-500' : 'border-white/10 group-focus-within:border-white/30'} rounded-2xl px-6 py-5 text-white placeholder:text-white/20 outline-none transition-all font-mono text-center tracking-[0.5em]`}
+              autoFocus
+            />
+            {error && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="absolute -bottom-8 left-0 right-0 text-center text-red-500 text-[10px] font-bold uppercase tracking-widest"
+              >
+                Incorrect Key
+              </motion.p>
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-white text-black font-black uppercase tracking-[0.2em] text-xs py-5 rounded-2xl hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_20px_40px_-10px_rgba(255,255,255,0.1)]"
+          >
+            Unlock Experience
+          </button>
+        </form>
+
+        <p className="mt-12 text-center text-white/20 text-[8px] uppercase tracking-widest leading-loose">
+          Proprietary Internal Documentation & Design Artifacts<br />
+          Authorized Access Only
+        </p>
+      </motion.div>
+    </div>
+  );
+}
+
+function PortfolioMain() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [expandedExp, setExpandedExp] = useState<string | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
@@ -28,6 +221,11 @@ export default function HomePage() {
     target: containerRef,
     offset: ["start start", "end end"]
   });
+
+  // Hero Transforms - fades and scales as we scroll
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.1, 0.2], [1, 1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.1, 0.2], [1, 1, 0.9]);
+  const heroY = useTransform(scrollYProgress, [0, 0.1, 0.2], [0, 0, -50]);
 
   // Lock scroll when case study is open
   useEffect(() => {
@@ -40,139 +238,6 @@ export default function HomePage() {
       document.body.style.overflow = "unset";
     };
   }, [activeCaseStudy]);
-
-  // Hero Transforms - fades and scales as we scroll
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.1, 0.2], [1, 1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.1, 0.2], [1, 1, 0.9]);
-  const heroY = useTransform(scrollYProgress, [0, 0.1, 0.2], [0, 0, -50]);
-
-  const logos = [
-    { src: "/company_logos/alterilogo.webp", alt: "Alteri" },
-    { src: "/company_logos/logo_prizmAI_clr_pos.svg", alt: "PrizmAI" },
-    { src: "/company_logos/onlia.png", alt: "Onlia" },
-    { src: "/company_logos/southampton_financial_inc_logo.jpeg", alt: "Southampton" },
-    { src: "/company_logos/cibclogo.png", alt: "CIBC" },
-    { src: "/company_logos/aha+insurance+logo_blue.webp", alt: "Aha Insurance" }
-  ];
-
-  const works = [
-    {
-      id: "south-hampton",
-      title: "South Hampton Financials",
-      category: "Private Equity",
-      image: "/images/shfnew.png",
-      color: "from-blue-600/20",
-    },
-    {
-      id: "onlia",
-      title: "Onlia Portal Experience",
-      category: "Consumer Product",
-      image: "/images/onliagood.png",
-      color: "from-purple-600/20",
-    },
-    {
-      id: "portoptix",
-      title: "PortOptix Dashboard",
-      category: "Fintech & Venture",
-      image: "/images/portoptixphoto.jpeg",
-      color: "from-orange-600/20",
-      locked: true
-    },
-    {
-      id: "national-sync",
-      title: "National Insurance Sync",
-      category: "Banking & Fintech",
-      image: "/images/cib.png",
-      color: "from-red-600/20",
-      locked: true
-    },
-    {
-      id: "prizm-ai",
-      title: "Prizm AI Marketing",
-      category: "Intelligence System",
-      image: "/images/prizmai.jpeg",
-      color: "from-amber-600/20",
-      locked: true
-    },
-    {
-      id: "virtumed",
-      title: "VirtuMed",
-      category: "Healthcare Infrastructure",
-      image: "/virtumed2.png",
-      color: "from-cyan-600/20",
-      locked: true
-    }
-  ];
-
-  const experiences = [
-    {
-      id: "southampton",
-      company: "South Hampton Financials",
-      role: "Product Engineer",
-      period: "2024 — Present",
-      type: "Full Time",
-      description: "Leading frontend development for a high-scale customer portal serving 200k+ users.",
-      details: [
-        "Developed and maintained a high-performance customer portal serving over 200,000 users using React, JavaScript, HTML5, and CSS3.",
-        "Designed modular, reusable React components, streamlining future development and improving UI consistency.",
-        "Built and integrated RESTful APIs for core features including user login, policy lookup, and transaction history.",
-        "Implemented Google Analytics and marketing tracking integrations for user engagement insights.",
-        "Maintained and optimized CI/CD pipelines with Jenkins, pushing production builds to AWS Amplify."
-      ]
-    },
-    {
-      id: "prizm",
-      company: "Prizm AI",
-      role: "Design Engineer",
-      period: "2024",
-      type: "Contract",
-      description: "Designed and built the user-facing marketing site and internal admin tools.",
-      details: [
-        "Built and designed the user-facing website, focusing on conversion optimization.",
-        "Set up an internal application for the marketing team to handle blogs and SEO controls.",
-        "Designed and built multiple user interfaces for the Prizm AI application.",
-        "Led the design and implementation of the main KPI card component with interactive charts."
-      ]
-    },
-    {
-      id: "portoptix",
-      company: "PortOptix",
-      role: "Full-Stack Developer",
-      period: "2024",
-      type: "Contract",
-      description: "Hardened the application for scalability and improved user onboarding.",
-      details: [
-        "Worked closely with the CEO to harden the application for 1000+ active users.",
-        "Managed user growth and engagement metrics with data-driven strategies.",
-        "Designed and implemented a comprehensive user management system.",
-        "Set up Supabase database tables and implemented authentication workflows."
-      ]
-    },
-    {
-      id: "alteri",
-      company: "Alteri Insurance",
-      role: "Software Developer",
-      period: "2024",
-      type: "Contract",
-      description: "Prototyped a business insurance portal and rating engine.",
-      details: [
-        "Designed and prototyped a comprehensive business insurance portal.",
-        "Collaborated to design and implement a rating engine for insurance quoting.",
-        "Led user research initiatives to understand broker workflows.",
-        "Developed user personas and journey maps to guide product design."
-      ]
-    }
-  ];
-
-  const references = [
-    { name: "Steve Lloyd", title: "IT Director, South Hampton Financials" },
-    { name: "Christine Cousins", title: "Creative Director, South Hampton Financials" },
-    { name: "Kevin Mastriano", title: "CEO, Prizm AI" },
-    { name: "Jay Leib", title: "CEO, PortOptix" },
-    { name: "Adam Stecklov", title: "AI Researcher, Mila" },
-    { name: "Joe Collins", title: "Commodity Analyst, Minerva Project" },
-    { name: "Dr. Anderson", title: "Neurosurgeon" }
-  ];
 
   return (
     <main ref={containerRef} className="relative bg-white text-black font-sans selection:bg-orange-500 selection:text-white overflow-x-hidden">
@@ -246,7 +311,7 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-6 md:gap-x-10 md:gap-y-8 px-4">
-              {logos.map((logo, i) => (
+              {LOGOS.map((logo, i) => (
                 <div key={i} className="relative w-16 h-8 md:w-28 md:h-14 flex-shrink-0 opacity-15 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500 cursor-pointer">
                   <Image
                     src={logo.src}
@@ -277,7 +342,7 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 md:gap-y-16 w-full px-6 md:px-8">
-            {works.slice(0, showAllProjects ? works.length : 4).map((work, i) => (
+            {WORKS.slice(0, showAllProjects ? WORKS.length : 4).map((work, i) => (
               <div key={i} className="group relative aspect-[4/3] md:aspect-[16/10] bg-gray-50 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
                 <div
                   onClick={() => {
@@ -438,7 +503,7 @@ export default function HomePage() {
             </div>
 
             <div className="border-t border-gray-100">
-              {experiences.map((exp) => (
+              {EXPERIENCES.map((exp) => (
                 <div key={exp.id} className="border-b border-gray-100">
                   <button
                     onClick={() => setExpandedExp(expandedExp === exp.id ? null : exp.id)}
@@ -501,7 +566,7 @@ export default function HomePage() {
               <p className="text-[10px] md:text-xs font-bold text-black/30 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-3 md:mt-4">Industry Partners & Leaders</p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100 rounded-2xl md:rounded-[2rem] overflow-hidden">
-              {references.map((item, i) => (
+              {REFERENCES.map((item, i) => (
                 <div key={i} className="bg-white p-8 md:p-10 hover:bg-gray-50 transition-colors group">
                   <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight mb-2 md:mb-3 group-hover:text-orange-500 transition-colors">
                     {item.name}
@@ -603,5 +668,35 @@ export default function HomePage() {
         )}
       </AnimatePresence>
     </main>
+  );
+}
+
+export default function HomePage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const auth = localStorage.getItem("portfolio-auth");
+    if (auth === "true") {
+      setIsAuthenticated(true);
+    }
+    setIsLoaded(true);
+  }, []);
+
+  const handleAuth = () => {
+    setIsAuthenticated(true);
+    localStorage.setItem("portfolio-auth", "true");
+  };
+
+  if (!isLoaded) return <div className="fixed inset-0 bg-black" />;
+
+  return (
+    <>
+      {!isAuthenticated ? (
+        <AuthGate onAuth={handleAuth} />
+      ) : (
+        <PortfolioMain />
+      )}
+    </>
   );
 }
