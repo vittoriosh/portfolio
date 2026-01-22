@@ -46,19 +46,24 @@
 :root {
   --radius: 0.625rem;
   /* Wood & Ocean inspired light theme */
-  --background: oklch(0.98 0.005 45); /* Warm cream */
-  --foreground: oklch(0.2 0.015 30); /* Deep wood brown */
+  --background: oklch(1 0 0);
+  /* Pure white */
+  --foreground: oklch(0.1 0 0);
+  /* Black-ish foreground for high contrast */
   --card: oklch(0.99 0.003 50);
   --card-foreground: oklch(0.18 0.02 35);
   --popover: oklch(0.99 0.003 50);
   --popover-foreground: oklch(0.18 0.02 35);
-  --primary: oklch(0.3 0.08 210); /* Ocean blue */
+  --primary: oklch(0.3 0.08 210);
+  /* Ocean blue */
   --primary-foreground: oklch(0.98 0.005 45);
-  --secondary: oklch(0.92 0.01 40); /* Light wood */
+  --secondary: oklch(0.92 0.01 40);
+  /* Light wood */
   --secondary-foreground: oklch(0.25 0.02 35);
   --muted: oklch(0.94 0.008 45);
   --muted-foreground: oklch(0.5 0.015 35);
-  --accent: oklch(0.88 0.015 200); /* Soft ocean */
+  --accent: oklch(0.88 0.015 200);
+  /* Soft ocean */
   --accent-foreground: oklch(0.2 0.02 30);
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.9 0.01 40);
@@ -81,19 +86,24 @@
 
 .dark {
   /* Wood & Ocean inspired dark theme */
-  --background: oklch(0.12 0.02 30); /* Deep charcoal wood */
-  --foreground: oklch(0.9 0.008 45); /* Warm light */
+  --background: oklch(0.12 0.02 30);
+  /* Deep charcoal wood */
+  --foreground: oklch(0.9 0.008 45);
+  /* Warm light */
   --card: oklch(0.15 0.025 35);
   --card-foreground: oklch(0.88 0.01 50);
   --popover: oklch(0.15 0.025 35);
   --popover-foreground: oklch(0.88 0.01 50);
-  --primary: oklch(0.6 0.12 200); /* Bright ocean */
+  --primary: oklch(0.6 0.12 200);
+  /* Bright ocean */
   --primary-foreground: oklch(0.12 0.02 30);
-  --secondary: oklch(0.18 0.03 40); /* Dark wood */
+  --secondary: oklch(0.18 0.03 40);
+  /* Dark wood */
   --secondary-foreground: oklch(0.85 0.01 45);
   --muted: oklch(0.16 0.025 35);
   --muted-foreground: oklch(0.65 0.02 40);
-  --accent: oklch(0.25 0.04 210); /* Deep ocean */
+  --accent: oklch(0.25 0.04 210);
+  /* Deep ocean */
   --accent-foreground: oklch(0.9 0.008 45);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(0.22 0.03 35);
@@ -118,10 +128,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   html {
-    @apply bg-green-950;
+    @apply bg-background;
   }
+
   body {
-    @apply bg-green-950 text-foreground;
+    @apply bg-background text-foreground;
   }
 }
