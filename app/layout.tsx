@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Vittorio | Product Designer & Engineer",
   description: "Portfolio of Vittorio, Product Designer & Engineer specializing in technical systems.",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
