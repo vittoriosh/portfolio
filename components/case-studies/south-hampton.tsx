@@ -44,7 +44,7 @@ export default function SouthHamptonCaseStudy({ onClose }: CaseStudyProps) {
                             <h1 className="text-5xl md:text-[8vw] font-black uppercase leading-[0.85] tracking-tighter mb-12 md:mb-20">
                                 Scaling Commercial
                                 <br />
-                                <span className="text-black/10 italic font-serif">Multi-Tenant Architecture</span>
+                                <span className="text-black italic font-serif font-black">Multi-Tenant Architecture</span>
                             </h1>
 
                             <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-20 border-t border-black/5 pt-12">

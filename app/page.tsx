@@ -10,7 +10,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 
 // Import Case Study Components
@@ -18,7 +17,6 @@ import SouthHamptonCaseStudy from "@/components/case-studies/south-hampton";
 import OnliaCaseStudy from "@/components/case-studies/onlia";
 
 const LOGOS = [
-  { src: "/company_logos/alterilogo.webp", alt: "Alteri" },
   { src: "/company_logos/logo_prizmAI_clr_pos.svg", alt: "PrizmAI" },
   { src: "/company_logos/onlia.png", alt: "Onlia" },
   { src: "/company_logos/southampton_financial_inc_logo.jpeg", alt: "Southampton" },
@@ -51,7 +49,7 @@ const WORKS = [
   },
   {
     id: "national-sync",
-    title: "National Insurance Sync",
+    title: "CIBC portal experience",
     category: "Banking & Fintech",
     image: "/images/cib.png",
     color: "from-red-600/20",
@@ -59,7 +57,7 @@ const WORKS = [
   },
   {
     id: "prizm-ai",
-    title: "Prizm AI Marketing",
+    title: "Prizm AI",
     category: "Intelligence System",
     image: "/images/prizmai.jpeg",
     color: "from-amber-600/20",
@@ -68,7 +66,7 @@ const WORKS = [
   {
     id: "virtumed",
     title: "VirtuMed",
-    category: "Healthcare Infrastructure",
+    category: "Start Up Project",
     image: "/virtumed2.png",
     color: "from-cyan-600/20",
     locked: true
@@ -79,23 +77,26 @@ const EXPERIENCES = [
   {
     id: "southampton",
     company: "South Hampton Financials",
-    role: "Product Engineer",
+    role: "Product Engineer (Commercial Portal) & Lead Product Designer (Home & Auto)",
     period: "2024 — Present",
     type: "Full Time",
-    description: "Leading frontend development for a high-scale customer portal serving 200k+ users.",
+    description: "Orchestrating the intersection of technical architecture and product design for a high-scale insurance ecosystem.",
     details: [
-      "Developed and maintained a high-performance customer portal serving over 200,000 users using React, JavaScript, HTML5, and CSS3.",
-      "Designed modular, reusable React components, streamlining future development and improving UI consistency.",
-      "Built and integrated RESTful APIs for core features including user login, policy lookup, and transaction history.",
-      "Implemented Google Analytics and marketing tracking integrations for user engagement insights.",
-      "Maintained and optimized CI/CD pipelines with Jenkins, pushing production builds to AWS Amplify."
+      "Orchestrated the end-to-end product design of a multi-tenant, white-label SaaS platform for commercial insurance, translating complex business requirements into intuitive B2B user journeys.",
+      "Designed a real-time brand identity engine that empowered B2B partners to customize UI themes via a no-code interface, eliminating the need for developer intervention during partner onboarding.",
+      "Optimized a high-velocity SPA user flow through iterative prototyping and user testing, resulting in a 19% increase in conversion speed compared to legacy systems.",
+      "Established and scaled a modular Design System in Figma and React, ensuring visual consistency across a portal serving 200,000+ users and reducing design-to-dev handoff time.",
+      "Directed the design strategy for core features—including policy management and transaction history—by creating high-fidelity wireframes and interactive prototypes to align stakeholders.",
+      "Leveraged data-driven design insights by integrating Google Analytics and marketing tracking to identify user friction points and inform iterative UI improvements.",
+      "Bridged the gap between design and engineering by maintaining high-performance front-end standards (HTML5/CSS3/React) and ensuring the final production builds matched design specifications.",
+      "Standardized accessible UI components to ensure the platform met WCAG compliance, expanding the product’s reach to a broader demographic of commercial users."
     ]
   },
   {
     id: "prizm",
     company: "Prizm AI",
     role: "Design Engineer",
-    period: "2024",
+    period: "2024 — Present",
     type: "Contract",
     description: "Designed and built the user-facing marketing site and internal admin tools.",
     details: [
@@ -108,41 +109,28 @@ const EXPERIENCES = [
   {
     id: "portoptix",
     company: "PortOptix",
-    role: "Full-Stack Developer",
-    period: "2024",
+    role: "Product Engineer",
+    period: "2024 — 2026",
     type: "Contract",
     description: "Hardened the application for scalability and improved user onboarding.",
     details: [
+      "Designed and developed the user-facing marketing website, focusing on rapid user acquisition and brand clarity.",
       "Worked closely with the CEO to harden the application for 1000+ active users.",
       "Managed user growth and engagement metrics with data-driven strategies.",
       "Designed and implemented a comprehensive user management system.",
       "Set up Supabase database tables and implemented authentication workflows."
     ]
-  },
-  {
-    id: "alteri",
-    company: "Alteri Insurance",
-    role: "Software Developer",
-    period: "2024",
-    type: "Contract",
-    description: "Prototyped a business insurance portal and rating engine.",
-    details: [
-      "Designed and prototyped a comprehensive business insurance portal.",
-      "Collaborated to design and implement a rating engine for insurance quoting.",
-      "Led user research initiatives to understand broker workflows.",
-      "Developed user personas and journey maps to guide product design."
-    ]
   }
 ];
 
 const REFERENCES = [
-  { name: "Steve Lloyd", title: "IT Director, South Hampton Financials" },
   { name: "Christine Cousins", title: "Creative Director, South Hampton Financials" },
   { name: "Kevin Mastriano", title: "CEO, Prizm AI" },
   { name: "Jay Leib", title: "CEO, PortOptix" },
-  { name: "Adam Stecklov", title: "AI Researcher, Mila" },
+  { name: "Adam Stecklov", title: "AI Researcher, VirtuMed" },
   { name: "Joe Collins", title: "Commodity Analyst, Minerva Project" },
-  { name: "Dr. Anderson", title: "Neurosurgeon" }
+  { name: "Dr. Anderson", title: "Neurosurgeon, VirtuMed" },
+  { name: "Nicholas Woodward", title: "CTO, Prizm AI" }
 ];
 
 function AuthGate({ onAuth }: { onAuth: () => void }) {
@@ -216,6 +204,7 @@ function PortfolioMain() {
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeCaseStudy, setActiveCaseStudy] = useState<string | null>(null);
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -245,49 +234,110 @@ function PortfolioMain() {
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:40px_40px] opacity-30" />
 
       {/* Header */}
-      <header className="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-[150] w-[95%] max-w-fit">
-        <div className="bg-black text-white px-3 md:px-4 py-2 md:py-3 rounded-full flex items-center gap-6 md:gap-32 shadow-2xl backdrop-blur-md bg-opacity-95 border border-white/10">
-          <div
+      <AnimatePresence>
+        {!activeCaseStudy && !isDialogOpen && (
+          <motion.header
+            initial={{ y: -100, x: "-50%", opacity: 0 }}
+            animate={{ y: 0, x: "-50%", opacity: 1 }}
+            exit={{ y: -100, x: "-50%", opacity: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed top-4 md:top-6 left-1/2 z-[150] w-[95%] max-w-fit"
+          >
+            <motion.div
+              layout
+              className="bg-black text-white rounded-[2rem] shadow-2xl backdrop-blur-md bg-opacity-95 border border-white/10 overflow-hidden flex flex-col items-center"
+              animate={{ minWidth: isNavOpen ? "300px" : "auto" }}
+            >
+              {/* Top Bar */}
+              <div
+                onClick={() => setIsNavOpen(!isNavOpen)}
+                className="px-3 md:px-4 py-2 md:py-3 flex items-center gap-6 md:gap-32 w-full cursor-pointer hover:bg-white/5 transition-colors"
+              >
+                <div className="flex items-center gap-3 md:gap-4">
+                  <div className="relative w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border border-white/20">
+                    <Image
+                      src="/profilephoto.jpeg"
+                      alt="Profile"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="flex flex-col leading-none">
+                    <span className="font-bold text-sm md:text-base tracking-tight uppercase whitespace-nowrap">Vittorio Shiffman</span>
+                    <span className="text-[9px] md:text-[11px] text-white/60 tracking-widest uppercase mt-0.5 md:mt-1">
+                      Design Engineer
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-2 ml-auto">
+                  <motion.div
+                    animate={{ rotate: isNavOpen ? 90 : 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {isNavOpen ? <X className="w-4 h-4 md:w-5 md:h-5 text-orange-500" /> : <Menu className="w-4 h-4 md:w-5 md:h-5" />}
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Downward Navigation Links */}
+              <AnimatePresence>
+                {isNavOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="w-full border-t border-white/10 overflow-hidden"
+                  >
+                    <div className="p-6 flex flex-col gap-4">
+                      {[
+                        { label: "Projects", id: "work" },
+                        { label: "Experience", id: "about" },
+                        { label: "Contact", id: "contact" }
+                      ].map((item: { label: string; id: string }) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            const el = document.getElementById(item.id);
+                            if (el) {
+                              setIsNavOpen(false);
+                              setTimeout(() => {
+                                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }, 100);
+                            }
+                          }}
+                          className="w-full text-left py-2 px-4 rounded-xl hover:bg-white/5 transition-colors group flex items-center justify-between"
+                        >
+                          <span className="text-white/40 text-sm font-bold uppercase tracking-widest group-hover:text-white group-hover:translate-x-1 transition-all">
+                            {item.label}
+                          </span>
+                          <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all text-orange-500" />
+                        </button>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </motion.header>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {!activeCaseStudy && (
+          <motion.button
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
             onClick={() => {
-              if (activeCaseStudy) setActiveCaseStudy(null);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
-            className="flex items-center gap-3 md:gap-4 cursor-pointer"
+            className="fixed top-6 right-8 z-[150] bg-black text-white px-6 py-3 rounded-full font-medium text-sm hover:scale-105 transition-transform active:scale-95 shadow-xl hidden xl:block"
           >
-            <div className="relative w-10 h-10 md:w-14 md:h-14 rounded-full overflow-hidden border border-white/20">
-              <Image
-                src="/profilephoto.jpeg"
-                alt="Profile"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-bold text-sm md:text-base tracking-tight uppercase whitespace-nowrap">Vittorio Shiffman</span>
-              <span className="text-[9px] md:text-[11px] text-white/60 tracking-widest uppercase mt-0.5 md:mt-1">
-                Design Engineer
-              </span>
-            </div>
-          </div>
-
-          <button
-            onClick={() => activeCaseStudy ? setActiveCaseStudy(null) : null}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors"
-          >
-            {activeCaseStudy ? <X className="w-4 h-4 md:w-5 md:h-5" /> : <Menu className="w-4 h-4 md:w-5 md:h-5" />}
-          </button>
-        </div>
-      </header>
-
-      <button
-        onClick={() => {
-          if (activeCaseStudy) setActiveCaseStudy(null);
-          setTimeout(() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }), 50);
-        }}
-        className="fixed top-6 right-8 z-[150] bg-black text-white px-6 py-3 rounded-full font-medium text-sm hover:scale-105 transition-transform active:scale-95 shadow-xl hidden xl:block"
-      >
-        Get in touch
-      </button>
+            Get in touch
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Section 1: Hero & Logos (Sticky) */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
@@ -427,22 +477,50 @@ function PortfolioMain() {
 
       {/* Locked Project Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="sm:max-w-md bg-white border-2 border-black rounded-[2rem] p-10">
-          <DialogHeader>
-            <DialogTitle className="text-3xl font-black uppercase tracking-tighter flex items-center gap-4">
-              <Lock className="w-8 h-8 text-orange-500" />
+        <DialogContent className="w-[95vw] sm:max-w-md bg-white border-2 border-black rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 overflow-hidden">
+          <DialogHeader className="text-left">
+            <DialogTitle className="text-2xl md:text-3xl font-black uppercase tracking-tighter flex items-center gap-3 md:gap-4 leading-none">
+              <Lock className="w-6 h-6 md:w-8 md:h-8 text-orange-500" />
               Coming Soon
             </DialogTitle>
-            <DialogDescription className="text-xl text-black/60 font-light leading-relaxed pt-6">
+            <div className="text-base md:text-lg text-black/60 font-light leading-relaxed pt-4 md:pt-6">
               Unfortunately, this case study is not finished or the work isn&apos;t live yet. I&apos;ll be updating this as soon as I get a chance.
-              <br /><br />
-              <span className="text-black font-medium">Feel free to contact me</span> if you have any questions about this specific project.
-            </DialogDescription>
+
+              <div className="mt-6 md:mt-8 pt-6 md:pt-8 border-t border-black/5 space-y-4">
+                <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-black/30">Explore live cases instead:</p>
+                <div className="flex flex-col gap-2 md:gap-3">
+                  <button
+                    onClick={() => {
+                      setIsDialogOpen(false);
+                      setTimeout(() => setActiveCaseStudy("south-hampton"), 300);
+                    }}
+                    className="flex items-center justify-between p-4 bg-gray-50 rounded-xl md:rounded-2xl hover:bg-black hover:text-white transition-all group active:scale-[0.98]"
+                  >
+                    <span className="font-bold uppercase tracking-tight text-sm md:text-base">South Hampton Financials</span>
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsDialogOpen(false);
+                      setTimeout(() => setActiveCaseStudy("onlia"), 300);
+                    }}
+                    className="flex items-center justify-between p-4 bg-gray-50 rounded-xl md:rounded-2xl hover:bg-black hover:text-white transition-all group active:scale-[0.98]"
+                  >
+                    <span className="font-bold uppercase tracking-tight text-sm md:text-base">Onlia Portal Experience</span>
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="mt-6 md:mt-8 text-sm md:text-base">
+                <span className="text-black font-medium">Feel free to contact me</span> if you have any questions about this project.
+              </div>
+            </div>
           </DialogHeader>
-          <div className="flex justify-end mt-10">
+          <div className="flex justify-end mt-8 md:mt-10">
             <button
               onClick={() => setIsDialogOpen(false)}
-              className="px-8 py-4 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform"
+              className="w-full sm:w-auto px-8 py-4 bg-black text-white rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all shadow-lg"
             >
               Understood
             </button>
@@ -596,22 +674,21 @@ function PortfolioMain() {
                 <span className="text-orange-500 italic font-serif">Connect</span>
               </h2>
               <p className="text-xl md:text-3xl font-light text-white/60 leading-tight mb-16">
-                Ready to engineer something <span className="text-white font-medium">extraordinary</span>? My inbox is always open for bold ideas.
+                Ready to engineer something <span className="text-white font-medium">extraordinary</span>? My inbox is always open.
               </p>
               <Link
                 href="mailto:vittorio.shiffman@gmail.com"
-                className="inline-flex items-center gap-4 text-2xl md:text-4xl font-bold uppercase tracking-tight hover:text-orange-500 transition-colors group"
+                className="flex items-center gap-3 md:gap-4 text-3xl sm:text-2xl md:text-4xl font-bold uppercase tracking-tight hover:text-orange-500 transition-colors group"
               >
-                vittorio.shiffman@gmail.com
-                <ArrowUpRight className="w-8 h-8 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <span className="sm:hidden">Email Me</span>
+                <span className="hidden sm:inline">vittorio.shiffman@gmail.com</span>
+                <ArrowUpRight className="w-8 h-8 md:w-8 md:h-8 shrink-0 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-4">
               {[
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/vittorio-s-b711952b7" },
-                { label: "GitHub", href: "https://github.com/vittorio-sh" },
-                { label: "Bento", href: "https://bento.me/vittorio" },
-                { label: "Resume", href: "/Vittorio_Shiffman_Final.pdf" }
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/vittorio-s-b711952b7", icon: <Linkedin className="w-5 h-5" /> },
+                { label: "GitHub", href: "https://github.com/vittorio-sh", icon: <Github className="w-5 h-5" /> }
               ].map((item, i) => (
                 <Link
                   key={i}
@@ -619,8 +696,13 @@ function PortfolioMain() {
                   target="_blank"
                   className="group flex items-center justify-between p-8 border border-white/10 rounded-2xl hover:bg-white/5 transition-all"
                 >
-                  <span className="text-sm font-bold uppercase tracking-[0.4em] text-white/40 group-hover:text-white transition-colors">{item.label}</span>
-                  <ArrowUpRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-all" />
+                  <div className="flex items-center gap-4">
+                    <span className="text-white group-hover:text-orange-500 transition-colors">
+                      {item.icon}
+                    </span>
+                    <span className="text-sm font-bold uppercase tracking-[0.4em] text-white group-hover:text-orange-500 transition-colors">{item.label}</span>
+                  </div>
+                  <ArrowUpRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transition-all text-orange-500" />
                 </Link>
               ))}
             </div>
@@ -639,7 +721,7 @@ function PortfolioMain() {
           >
             <div
               onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
               className="flex items-center gap-2 pointer-events-auto group cursor-pointer bg-white/10 backdrop-blur-sm p-2 rounded-full md:bg-transparent md:backdrop-blur-none md:p-0"
             >
@@ -653,7 +735,7 @@ function PortfolioMain() {
 
             <div
               onClick={() => {
-                document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('work')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
               className="flex items-center gap-2 pointer-events-auto group cursor-pointer text-right bg-white/10 backdrop-blur-sm p-2 rounded-full md:bg-transparent md:backdrop-blur-none md:p-0"
             >

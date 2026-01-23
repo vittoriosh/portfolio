@@ -1,64 +1,59 @@
-'use client'
+"use client";
 
-import Link from 'next/link'
-import { motion } from 'motion/react'
-import { ArrowLeft } from 'lucide-react'
+import React from "react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
     return (
-        <div className="h-[100dvh] w-full bg-green-950 flex flex-col items-center justify-center text-amber-50 relative overflow-hidden selection:bg-amber-500/30">
+        <div className="fixed inset-0 z-[1000] bg-black flex items-center justify-center p-6 selection:bg-orange-500 selection:text-white">
+            {/* Background radial gradient */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_0%,transparent_100%)] pointer-events-none" />
 
-            {/* Background Decorative Elements */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-amber-500/5 rounded-full blur-[100px] pointer-events-none" />
+            {/* Background mesh grid effect */}
+            <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03] pointer-events-none" />
 
             <motion.div
-                className="relative z-10 flex flex-col items-center text-center px-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full max-w-2xl text-center relative z-10"
             >
-                <motion.p
-                    className="font-mono text-sm sm:text-base text-amber-200/60 uppercase tracking-[0.3em] mb-4"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                    className="mb-8"
                 >
-                    Error
-                </motion.p>
+                    <span className="text-[15vw] md:text-[12vw] font-black leading-none tracking-tighter text-white/5 select-none block">
+                        404
+                    </span>
+                </motion.div>
 
-                <h1 className="text-[120px] sm:text-[180px] md:text-[240px] font-black leading-none tracking-tighter text-amber-50/10 select-none">
-                    404
-                </h1>
+                <div className="-mt-12 md:-mt-20">
+                    <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6">
+                        Page Not <span className="text-orange-500 italic font-serif">Found</span>
+                    </h1>
 
-                <div className="-mt-8 sm:-mt-12 md:-mt-16 space-y-6 sm:space-y-8">
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-                        Page Not Found
-                    </h2>
-
-                    <p className="text-amber-100/60 max-w-sm mx-auto text-sm sm:text-base leading-relaxed">
+                    <p className="text-lg md:text-xl text-white/40 font-light leading-relaxed max-w-sm mx-auto mb-12">
                         The page you are looking for doesn&apos;t exist or has been moved.
                     </p>
 
-                    <Link href="/" className="inline-block">
-                        <motion.div
-                            className="group flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-amber-100/5 hover:bg-amber-100/10 border border-amber-100/10 rounded-full transition-all duration-300"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                        >
-                            <ArrowLeft className="w-4 h-4 text-amber-200 group-hover:-translate-x-1 transition-transform" />
-                            <span className="font-mono text-xs sm:text-sm text-amber-100 uppercase tracking-widest">Return Home</span>
-                        </motion.div>
-                    </Link>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <Link href="/">
+                            <motion.button
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="group flex items-center gap-4 bg-white text-black px-10 py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-xs shadow-[0_20px_40px_-10px_rgba(255,255,255,0.1)] transition-all"
+                            >
+                                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                                Return Home
+                            </motion.button>
+                        </Link>
+                    </div>
                 </div>
             </motion.div>
-
-            {/* Footer / Corner Info */}
-            <div className="absolute bottom-8 left-8 hidden md:block">
-                <span className="font-mono text-xs text-amber-100/20">404_ERROR_HANDLE</span>
-            </div>
-            <div className="absolute bottom-8 right-8 hidden md:block">
-                <span className="font-mono text-xs text-amber-100/20">SYSTEM_STATUS: ACTIVE</span>
-            </div>
         </div>
-    )
+    );
 }
