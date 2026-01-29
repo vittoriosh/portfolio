@@ -123,15 +123,7 @@ const EXPERIENCES = [
   }
 ];
 
-const REFERENCES = [
-  { name: "Christine Cousins", title: "Creative Director, South Hampton Financials" },
-  { name: "Kevin Mastriano", title: "CEO, Prizm AI" },
-  { name: "Jay Leib", title: "CEO, PortOptix" },
-  { name: "Adam Stecklov", title: "AI Researcher, VirtuMed" },
-  { name: "Joe Collins", title: "Commodity Analyst, Minerva Project" },
-  { name: "Dr. Anderson", title: "Neurosurgeon, VirtuMed" },
-  { name: "Nicholas Woodward", title: "CTO, Prizm AI" }
-];
+
 
 function AuthGate({ onAuth }: { onAuth: () => void }) {
   const [password, setPassword] = useState("");
@@ -637,28 +629,7 @@ function PortfolioMain() {
             </div>
           </div>
 
-          {/* References Grid */}
-          <div className="px-4">
-            <div className="mb-12 md:mb-16">
-              <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">References</h3>
-              <p className="text-[10px] md:text-xs font-bold text-black/30 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-3 md:mt-4">Industry Partners & Leaders</p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-100 border border-gray-100 rounded-2xl md:rounded-[2rem] overflow-hidden">
-              {REFERENCES.map((item, i) => (
-                <div key={i} className="bg-white p-8 md:p-10 hover:bg-gray-50 transition-colors group">
-                  <h4 className="text-lg md:text-xl font-bold uppercase tracking-tight mb-2 md:mb-3 group-hover:text-orange-500 transition-colors">
-                    {item.name}
-                  </h4>
-                  <p className="text-[9px] md:text-[10px] font-bold text-black/40 uppercase tracking-widest leading-relaxed">
-                    {item.title}
-                  </p>
-                </div>
-              ))}
-              <div className="bg-white p-8 md:p-10 flex items-center justify-center bg-gray-50/50">
-                <span className="text-[9px] md:text-[10px] font-bold text-black/20 uppercase tracking-[0.3em] md:tracking-[0.4em]">Full list on request</span>
-              </div>
-            </div>
-          </div>
+
         </div>
       </section>
 
