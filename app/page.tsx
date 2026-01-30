@@ -338,7 +338,7 @@ function PortfolioMain() {
           className="flex flex-col items-center justify-center px-6 pt-20 w-full"
         >
           <h1 className="text-[20vw] md:text-[14vw] font-black uppercase leading-[0.8] tracking-[-0.08em] text-center mb-10 md:mb-16 break-words">
-            Design
+            Product
             <br />
             Engineer
           </h1>
