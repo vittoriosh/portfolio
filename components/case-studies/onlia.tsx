@@ -40,14 +40,14 @@ export default function OnliaCaseStudy({ onClose }: CaseStudyProps) {
                             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
                         >
                             <h1 className="text-6xl md:text-[10vw] font-black uppercase leading-[0.85] tracking-tighter mb-12 md:mb-20">
-                                Onlia Portal
+                                Broker
                                 <br />
-                                <span className="text-black/10 italic font-serif">Redesign</span>
+                                <span className="text-purple-600 italic font-serif">Intelligence</span>
                             </h1>
 
                             <div className="mb-12">
                                 <p className="text-2xl md:text-4xl font-light text-black/60 leading-tight italic max-w-4xl">
-                                    Optimizing Customer Conversion via <span className="text-black font-medium">Persona-Adaptive UI</span>
+                                    Empowering Brokers via <span className="text-black font-medium">AI-Driven Intelligence</span>
                                 </p>
                             </div>
 
@@ -76,10 +76,10 @@ export default function OnliaCaseStudy({ onClose }: CaseStudyProps) {
                             <div className="space-y-8 md:space-y-12">
                                 <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">The Challenge</h2>
                                 <p className="text-xl md:text-3xl font-light text-white/70 leading-relaxed">
-                                    Onlia faced a critical <span className="text-white font-medium">16% user drop-off rate</span> on the initial portal entry page. The complexity was rooted in the application’s dual nature: it served both Direct Customers and CSRs/Brokers.
+                                    Brokers were overwhelmed by the complexity of modern insurance policies, leading to critical <span className="text-white font-medium">information asymmetry</span> and missed coverage opportunities.
                                 </p>
                                 <p className="text-xl md:text-3xl font-light text-white/70 leading-relaxed italic border-l-2 border-purple-500 pl-8">
-                                    Drastic changes risked confusing internal staff or creating massive technical debt, yet the existing UI was actively driving users away.
+                                    Legacy systems provided raw data but zero insight, making it nearly impossible for brokers to visualize risk profiles and policy overlaps in real-time.
                                 </p>
                             </div>
                             <div className="flex flex-col justify-center">
@@ -115,23 +115,23 @@ export default function OnliaCaseStudy({ onClose }: CaseStudyProps) {
                             {[
                                 {
                                     step: "01",
-                                    title: "Diagnostic Audit",
-                                    content: "I utilized Google Analytics and UI audits to pinpoint why users were abandoning the flow. The diagnostics revealed obsolete UI patterns, low interactivity (small hit-zones), and massive responsiveness gaps on mobile devices."
+                                    title: "AI Policy Parsing",
+                                    content: "I developed a specialized LLM pipeline to ingest massive, complex policy documents and extract key risk factors, exclusions, and coverage limits automatically."
                                 },
                                 {
                                     step: "02",
-                                    title: "Component-Level Mode Switching",
-                                    content: "To solve the dual-persona conflict, I transitioned from a 'universal' layout to a Conditional Component Mode. I encapsulated the legacy layout for CSRs while designing an entirely new, high-conversion 'Customer Mode' from scratch."
+                                    title: "Visualization Layer",
+                                    content: "I engineered a high-performance visualization engine to transform raw policy data into intuitive, interactive risk maps and comparison matrices for brokers."
                                 },
                                 {
                                     step: "03",
-                                    title: "Dialogue-First Design",
-                                    content: "Within the Customer component, I simplified the visual weight. I implemented Progressive Disclosure to group fields into conversational steps, adding contextual guidance and larger, accessible input fields."
+                                    title: "Real-time Intelligence",
+                                    content: "Implemented a live intelligence layer that cross-references customer data with policy clauses, highlighting gaps and upsell opportunities as the broker navigates the dashboard."
                                 },
                                 {
                                     step: "04",
-                                    title: "Mobile & Thumb-Zone Optimization",
-                                    content: "By shifting primary inputs into the natural reach area and increasing touch-target sizes specifically for the Customer Mode, I addressed the physical friction identified in the initial audit."
+                                    title: "Broker Workflow UX",
+                                    content: "Designed a mission-control interface that prioritizes actionable insights, reducing the average time spent on policy review by over 40%."
                                 }
                             ].map((item, i) => (
                                 <motion.div

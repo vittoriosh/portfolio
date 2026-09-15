@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDownRight, ArrowUpRight, Menu, Github, Linkedin, Mail, Plus, Minus, Lock, X } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Menu, Linkedin, Mail, Lock, X } from "lucide-react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import {
   Dialog,
@@ -14,30 +14,84 @@ import {
 
 // Import Case Study Components
 import SouthHamptonCaseStudy from "@/components/case-studies/south-hampton";
-import OnliaCaseStudy from "@/components/case-studies/onlia";
+import HomedraftCaseStudy from "@/components/case-studies/homedraft";
+import PortfolioChat from "@/components/portfolio-chat";
 
 const LOGOS = [
   { src: "/company_logos/logo_prizmAI_clr_pos.svg", alt: "PrizmAI" },
   { src: "/company_logos/onlia.png", alt: "Onlia" },
   { src: "/company_logos/southampton_financial_inc_logo.jpeg", alt: "Southampton" },
-  { src: "/company_logos/cibclogo.png", alt: "CIBC" },
   { src: "/company_logos/aha+insurance+logo_blue.webp", alt: "Aha Insurance" }
 ];
 
 const WORKS = [
   {
     id: "south-hampton",
-    title: "South Hampton Financials",
-    category: "Private Equity",
-    image: "/images/shfnew.png",
+    title: "Commercial Insurance Application",
+    category: "Quote & Bind Platform",
+    image: "/images/aha-commercial-hero.png",
     color: "from-blue-600/20",
+    description: "Designed and built a 0-to-1 commercial insurance platform that enables businesses to quote and bind coverage online.",
+    metrics: [
+      { value: "300+", label: "Active policies" },
+      { value: "1,500+", label: "Leads generated" }
+    ],
+    url: "https://commercial.ahainsurance.ca/",
+    type: "professional"
   },
   {
-    id: "onlia",
-    title: "Onlia Portal Experience",
-    category: "Consumer Product",
-    image: "/images/onliagood.png",
-    color: "from-purple-600/20",
+    id: "runcost",
+    title: "runCost",
+    category: "Personal Project",
+    image: "/images/runcost-charts.jpg",
+    color: "from-neutral-800/20",
+    description: "Built a Canadian vehicle research platform on 10,000+ cars, stitching IBC claim indexes, NRCan fuel ratings, and NHTSA safety data — with AI Q&A wired through Claude, Gemini, and ChatGPT.",
+    metrics: [
+      { value: "10k+", label: "Cars in dataset" },
+      { value: "500+", label: "Monthly traffic" }
+    ],
+    logos: [
+      { src: "/images/ai/claude.svg", alt: "Claude" },
+      { src: "/images/ai/gemini.svg", alt: "Gemini" },
+      { src: "/images/ai/chatgpt.svg", alt: "ChatGPT" }
+    ],
+    url: "https://runcost-pi.vercel.app/",
+    type: "personal"
+  },
+  {
+    id: "matchday-manager",
+    title: "Matchday Manager",
+    category: "Personal Project",
+    image: "/images/matchday-hero.jpg",
+    color: "from-emerald-900/30",
+    description: "Designed and architected a soccer draft career-mode game — snake drafts, 180k+ player database, packs, and Classic 11s / 7s modes.",
+    metrics: [
+      { value: "100+", label: "Unique users" },
+      { value: "1,000+", label: "Plays" }
+    ],
+    url: "https://sevens-labs.vercel.app/",
+    type: "personal"
+  },
+  {
+    id: "homedraft",
+    title: "Homedraft",
+    category: "Personal Project",
+    image: "/images/homedraft_hero.png",
+    color: "from-blue-900/20",
+    description: "Researched Ontario home grants and loans, designed a data model for every eligibility field, and built a matching algorithm — an attempted startup; the live version still works.",
+    url: "https://app.homedraft.ca/",
+    caseStudy: true,
+    type: "personal"
+  },
+  {
+    id: "virtumed",
+    title: "VirtuMed",
+    category: "Personal Project",
+    image: "/virtumed2.png",
+    color: "from-cyan-600/20",
+    description: "Developed an LLM-powered platform for medical practitioners in partnership with another AI developer and a neurosurgeon.",
+    locked: true,
+    type: "personal"
   },
   {
     id: "portoptix",
@@ -45,71 +99,41 @@ const WORKS = [
     category: "Fintech & Venture",
     image: "/images/portoptixphoto.jpeg",
     color: "from-orange-600/20",
-    locked: true
-  },
-  {
-    id: "national-sync",
-    title: "CIBC portal experience",
-    category: "Banking & Fintech",
-    image: "/images/cib.png",
-    color: "from-red-600/20",
-    locked: true
-  },
-  {
-    id: "prizm-ai",
-    title: "Prizm AI",
-    category: "Intelligence System",
-    image: "/images/prizmai.jpeg",
-    color: "from-amber-600/20",
-    locked: true
-  },
-  {
-    id: "virtumed",
-    title: "VirtuMed",
-    category: "Start Up Project",
-    image: "/virtumed2.png",
-    color: "from-cyan-600/20",
-    locked: true
+    description: "Built and hardened a fintech platform for scale, including its marketing experience, user management, authentication, and data infrastructure.",
+    locked: true,
+    type: "professional"
   }
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- kept for restore
 const EXPERIENCES = [
   {
     id: "southampton",
     company: "South Hampton Financials",
-    role: "Product Engineer (Commercial Portal) & Lead Product Designer (Home & Auto)",
-    period: "2024 — Present",
+    role: "Technical Product Manager Canada",
+    period: "February 2024 — Present",
     type: "Full Time",
-    description: "Orchestrating the intersection of technical architecture and product design for a high-scale insurance ecosystem.",
+    description: "Engineering a high-velocity 0-to-1 commercial insurance platform, bridging technical architecture with strategic product growth and AI-native workflows.",
     details: [
-      "Orchestrated the end-to-end product design of a multi-tenant, white-label SaaS platform for commercial insurance, translating complex business requirements into intuitive B2B user journeys.",
-      "Designed a real-time brand identity engine that empowered B2B partners to customize UI themes via a no-code interface, eliminating the need for developer intervention during partner onboarding.",
-      "Optimized a high-velocity SPA user flow through iterative prototyping and user testing, resulting in a 19% increase in conversion speed compared to legacy systems.",
-      "Established and scaled a modular Design System in Figma and React, ensuring visual consistency across a portal serving 200,000+ users and reducing design-to-dev handoff time.",
-      "Directed the design strategy for core features—including policy management and transaction history—by creating high-fidelity wireframes and interactive prototypes to align stakeholders.",
-      "Leveraged data-driven design insights by integrating Google Analytics and marketing tracking to identify user friction points and inform iterative UI improvements.",
-      "Bridged the gap between design and engineering by maintaining high-performance front-end standards (HTML5/CSS3/React) and ensuring the final production builds matched design specifications.",
-      "Standardized accessible UI components to ensure the platform met WCAG compliance, expanding the product’s reach to a broader demographic of commercial users."
+      "Executed a 0-to-1 product launch by engineering a new commercial insurance platform from the ground up, designing the architecture across the frontend, middleware, backend, and database with Salesforce integration.",
+      "Built a scalable data schema and architecture that enabled seamless onboarding for new carriers while ensuring data flow integrity and meeting strict project timelines.",
+      "Leveraged agentic coding and LLM-native workflows to complete the project start-to-finish in 3 months, representing a 4x increase in velocity compared to legacy product launches.",
+      "Scaled the new platform to a current user base of over 1,000 active clients who successfully bind insurance policies end-to-end online.",
+      "Acted as a technical liaison and solution engineer for a strategic partnership with a Big 5 Canadian Bank, architecting a white-labeled, embedded insurance solution to be integrated into their ecosystem.",
+      "Engineered an internal KPI dashboard to monitor system health and data integrity, identifying critical synchronization anomalies that recovered $100,000 in untracked revenue.",
+      "Engineered a secondary internal analytics dashboard using Cursor to provide deep visibility into multiple KPIs; implemented advanced filtering for massive datasets which accelerated marketing campaign cycles and product feature decision-making.",
+      "Analyzed user behavior using Google Analytics and Hotjar to identify friction points and drop-off areas, resulting in a 16% reduction in user drop-off.",
+      "Increased online binding completion rates from 4% to 6% through iterative frontend refinements and the launch of new carrier onboarding features.",
+      "Launched 20+ core features and over 70+ minor enhancements while maintaining a constant focus on increasing user traffic and platform engagement.",
+      "Managed the advancement of a suite of products by translating user needs into concise technical specifications and clearing 500+ tickets in the process.",
+      "Facilitated daily sprints, roadmaps, and technical requirement documentation using a strict agile methodology while managing all development tasks and user stories within Jira to maintain organizational transparency."
     ]
   },
-  {
-    id: "prizm",
-    company: "Prizm AI",
-    role: "Design Engineer",
-    period: "2024 — Present",
-    type: "Contract",
-    description: "Designed and built the user-facing marketing site and internal admin tools.",
-    details: [
-      "Built and designed the user-facing website, focusing on conversion optimization.",
-      "Set up an internal application for the marketing team to handle blogs and SEO controls.",
-      "Designed and built multiple user interfaces for the Prizm AI application.",
-      "Led the design and implementation of the main KPI card component with interactive charts."
-    ]
-  },
+
   {
     id: "portoptix",
     company: "PortOptix",
-    role: "Product Engineer",
+    role: "Software Developer",
     period: "2024 — 2026",
     type: "Contract",
     description: "Hardened the application for scalability and improved user onboarding.",
@@ -120,8 +144,25 @@ const EXPERIENCES = [
       "Designed and implemented a comprehensive user management system.",
       "Set up Supabase database tables and implemented authentication workflows."
     ]
+  },
+
+  {
+    id: "prizm",
+    company: "Prizm AI",
+    role: "Software Developer",
+    period: "2024 — Present",
+    type: "Contract",
+    description: "Architected and engineered high-conversion marketing surfaces and internal data management systems.",
+    details: [
+      "Built and designed the high-fidelity user-facing website, focusing on conversion optimization and technical brand storytelling.",
+      "Engineered an internal administrative platform for the marketing team to manage blogs, SEO controls, and dynamic content delivery.",
+      "Designed and implemented complex UI components for the Prizm AI core application, ensuring a seamless and high-performance user experience.",
+      "Led the technical implementation of core data visualization tools, including the main KPI dashboard with interactive chart integrations."
+    ]
   }
 ];
+
+
 
 
 
@@ -192,7 +233,7 @@ function AuthGate({ onAuth }: { onAuth: () => void }) {
 
 function PortfolioMain() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [expandedExp, setExpandedExp] = useState<string | null>(null);
+  // const [expandedExp, setExpandedExp] = useState<string | null>(null);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [activeCaseStudy, setActiveCaseStudy] = useState<string | null>(null);
@@ -257,7 +298,7 @@ function PortfolioMain() {
                   <div className="flex flex-col leading-none">
                     <span className="font-bold text-sm md:text-base tracking-tight uppercase whitespace-nowrap">Vittorio Shiffman</span>
                     <span className="text-[9px] md:text-[11px] text-white/60 tracking-widest uppercase mt-0.5 md:mt-1">
-                      Design Engineer
+                      Product Engineer
                     </span>
                   </div>
                 </div>
@@ -283,8 +324,8 @@ function PortfolioMain() {
                   >
                     <div className="p-6 flex flex-col gap-4">
                       {[
-                        { label: "Projects", id: "work" },
-                        { label: "Experience", id: "about" },
+                        { label: "Work", id: "work" },
+                        { label: "About", id: "about" },
                         { label: "Contact", id: "contact" }
                       ].map((item: { label: string; id: string }) => (
                         <button
@@ -306,6 +347,16 @@ function PortfolioMain() {
                           <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all text-orange-500" />
                         </button>
                       ))}
+                      <Link
+                        href="/roadmap"
+                        onClick={() => setIsNavOpen(false)}
+                        className="w-full text-left py-2 px-4 rounded-xl hover:bg-white/5 transition-colors group flex items-center justify-between"
+                      >
+                        <span className="text-white/40 text-sm font-bold uppercase tracking-widest group-hover:text-white group-hover:translate-x-1 transition-all">
+                          Road map
+                        </span>
+                        <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all text-orange-500" />
+                      </Link>
                     </div>
                   </motion.div>
                 )}
@@ -369,7 +420,7 @@ function PortfolioMain() {
       </div>
 
       {/* Section 2: Work (Relative / Normal Scroll) */}
-      <section id="work" className="relative z-10 bg-white pt-24 md:pt-48 pb-24 md:pb-48 border-b border-gray-100">
+      <section id="work" className="relative z-10 bg-white pt-24 md:pt-48 pb-10 md:pb-16 border-b border-gray-100">
         <div className="w-full max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 md:mb-24 px-6 md:px-8 gap-6">
             <h2 className="text-6xl md:text-[9vw] font-black uppercase leading-[0.8] md:leading-[0.7] tracking-tighter">
@@ -383,55 +434,157 @@ function PortfolioMain() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 md:gap-y-16 w-full px-6 md:px-8">
-            {WORKS.slice(0, showAllProjects ? WORKS.length : 4).map((work, i) => (
-              <div key={i} className="group relative aspect-[4/3] md:aspect-[16/10] bg-gray-50 rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden">
-                <div
+          <div className="w-full px-6 md:px-8">
+            {WORKS.slice(0, showAllProjects ? WORKS.length : 4).map((work) => (
+              <article
+                key={work.id}
+                className="group border-t border-black/15 py-10 md:py-16 last:border-b"
+              >
+                <button
+                  type="button"
                   onClick={() => {
-                    if (work.locked) {
+                    if ("caseStudy" in work && work.caseStudy) {
+                      setActiveCaseStudy(work.id);
+                    } else if (work.url) {
+                      window.open(work.url, "_blank", "noopener,noreferrer");
+                    } else if (work.locked) {
                       setIsDialogOpen(true);
                     } else {
                       setActiveCaseStudy(work.id);
                     }
                   }}
-                  className={`relative w-full h-full border border-gray-100 transition-all duration-700 ${!work.locked ? 'hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)] md:hover:scale-[1.01] cursor-pointer' : 'cursor-help'}`}
+                  className={`grid w-full grid-cols-1 items-center gap-8 text-left md:grid-cols-12 md:gap-12 lg:gap-20 ${!work.locked || work.url || ("caseStudy" in work && work.caseStudy) ? "cursor-pointer" : "cursor-help"}`}
+                  aria-label={`${work.title}${"caseStudy" in work && work.caseStudy ? " — open case study" : work.url ? " — open live demo" : work.locked ? " — case study in progress" : " — open case study"}`}
                 >
-                  <Image
-                    src={work.image}
-                    alt={work.title}
-                    fill
-                    className={`object-cover transition-transform duration-[1.5s] ${!work.locked ? 'group-hover:scale-110' : ''}`}
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${work.color} to-transparent opacity-0 ${!work.locked ? 'group-hover:opacity-100' : ''} transition-opacity duration-700`} />
+                  <div className="md:col-span-5 lg:pr-8">
+                    <h3 className="max-w-lg text-4xl md:text-5xl lg:text-6xl font-black text-black uppercase tracking-[-0.06em] leading-[0.86]">
+                      {work.title}
+                    </h3>
 
-                  <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 translate-y-4 md:translate-y-6 group-hover:translate-y-0 transition-transform duration-700">
-                    <div className="backdrop-blur-xl bg-white/90 p-5 md:p-8 rounded-2xl md:rounded-3xl border border-white/50 max-w-fit shadow-2xl">
-                      <span className="text-[9px] md:text-[11px] uppercase tracking-[0.15em] md:tracking-[0.2em] font-bold text-black/50 mb-1 md:mb-2 block">
-                        {work.category}
-                      </span>
-                      <h3 className="text-2xl md:text-4xl font-bold text-black uppercase tracking-tight leading-tight">
-                        {work.title}
-                      </h3>
-                      {work.locked && (
-                        <div className="flex items-center gap-2 mt-3 text-[9px] font-bold uppercase tracking-widest text-black/30">
-                          <Lock className="w-3 h-3" />
-                          Case study in progress
+                    <p className="mt-6 max-w-md text-base leading-relaxed text-black/55 md:text-lg">
+                      {work.description}
+                    </p>
+
+                    {"metrics" in work && work.metrics && (
+                      <div className="mt-8 grid max-w-md grid-cols-2 gap-6 border-y border-black/10 py-6">
+                        {work.metrics.map((metric) => (
+                          <div key={metric.label} className="space-y-1">
+                            <p className="text-3xl md:text-4xl font-black tracking-tighter leading-none">
+                              {metric.value}
+                            </p>
+                            <p className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-black/40">
+                              {metric.label}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {"logos" in work && work.logos && (
+                      <div className="mt-6">
+                        <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.22em] text-black/35">
+                          AI stack
+                        </p>
+                        <div className="flex items-center gap-3">
+                          {work.logos.map((logo) => (
+                            <div
+                              key={logo.alt}
+                              className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white shadow-sm"
+                              title={logo.alt}
+                            >
+                              <img
+                                src={logo.src}
+                                alt={logo.alt}
+                                width={22}
+                                height={22}
+                                className="h-[22px] w-[22px] object-contain"
+                              />
+                            </div>
+                          ))}
                         </div>
-                      )}
+                      </div>
+                    )}
+
+                    <div className="mt-8 hidden md:flex items-center gap-3">
+                      <span className={`flex h-11 items-center gap-3 rounded-full px-5 text-[9px] font-bold uppercase tracking-[0.18em] transition-colors duration-300 ${
+                        "caseStudy" in work && work.caseStudy
+                          ? "bg-black text-white hover:bg-white hover:text-black border border-black"
+                          : work.url
+                          ? "bg-black text-white hover:bg-white hover:text-black border border-black"
+                          : work.locked
+                            ? "bg-black/5 text-black/40"
+                            : "bg-black text-white hover:bg-white hover:text-black border border-black"
+                      }`}>
+                        {"caseStudy" in work && work.caseStudy ? (
+                          <>
+                            View case study
+                            <ArrowUpRight className="h-3.5 w-3.5" />
+                          </>
+                        ) : work.url ? (
+                          <>
+                            View live project
+                            <ArrowUpRight className="h-3.5 w-3.5" />
+                          </>
+                        ) : work.locked ? (
+                          <>
+                            <Lock className="h-3 w-3" />
+                            Case study in progress
+                          </>
+                        ) : (
+                          <>
+                            View case study
+                            <ArrowUpRight className="h-3.5 w-3.5" />
+                          </>
+                        )}
+                      </span>
                     </div>
                   </div>
 
-                  {!work.locked && (
-                    <div className="absolute top-6 right-6 md:top-10 md:right-10 w-10 h-10 md:w-14 md:h-14 rounded-full bg-white/80 backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-4 md:translate-x-6 group-hover:translate-x-0 transition-all duration-700">
-                      <ArrowUpRight className="w-4 h-4 md:w-6 md:h-6 text-black" />
-                    </div>
-                  )}
-                </div>
-              </div>
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-[#f2f2f0] md:col-span-7 md:aspect-[16/10] md:rounded-[2rem]">
+                    <Image
+                      src={work.image}
+                      alt={work.title}
+                      fill
+                      className={`object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] ${!work.locked || work.url ? "group-hover:scale-[1.035]" : ""}`}
+                    />
+                    <div className={`absolute inset-0 bg-gradient-to-tr ${work.color} to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100`} />
+                  </div>
+
+                  <div className="flex md:hidden items-center gap-3">
+                    <span className={`flex h-11 items-center gap-3 rounded-full px-5 text-[9px] font-bold uppercase tracking-[0.18em] ${
+                      work.locked && !work.url && !("caseStudy" in work && work.caseStudy)
+                        ? "bg-black/5 text-black/40"
+                        : "bg-black text-white border border-black"
+                    }`}>
+                      {"caseStudy" in work && work.caseStudy ? (
+                        <>
+                          View case study
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </>
+                      ) : work.url ? (
+                        <>
+                          View live project
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </>
+                      ) : work.locked ? (
+                        <>
+                          <Lock className="h-3 w-3" />
+                          Case study in progress
+                        </>
+                      ) : (
+                        <>
+                          View case study
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </>
+                      )}
+                    </span>
+                  </div>
+                </button>
+              </article>
             ))}
           </div>
 
-          <div className="mt-20 flex justify-center">
+          <div className="mt-12 md:mt-16 flex justify-center">
             <button
               onClick={() => setShowAllProjects(!showAllProjects)}
               className="group relative px-12 py-5 bg-black text-white rounded-full font-bold uppercase tracking-[0.3em] text-[10px] hover:scale-105 transition-all active:scale-95 shadow-2xl flex items-center gap-4"
@@ -446,7 +599,6 @@ function PortfolioMain() {
           </div>
         </div>
       </section>
-
       {/* Case Study Overlays */}
       <AnimatePresence mode="wait">
         {activeCaseStudy === "south-hampton" && (
@@ -457,12 +609,9 @@ function PortfolioMain() {
             }}
           />
         )}
-        {activeCaseStudy === "onlia" && (
-          <OnliaCaseStudy
-            onClose={(nextId) => {
-              setActiveCaseStudy(null);
-              if (nextId) setTimeout(() => setActiveCaseStudy(nextId), 100);
-            }}
+        {activeCaseStudy === "homedraft" && (
+          <HomedraftCaseStudy
+            onClose={() => setActiveCaseStudy(null)}
           />
         )}
       </AnimatePresence>
@@ -484,21 +633,11 @@ function PortfolioMain() {
                   <button
                     onClick={() => {
                       setIsDialogOpen(false);
-                      setTimeout(() => setActiveCaseStudy("south-hampton"), 300);
+                      setTimeout(() => setActiveCaseStudy("homedraft"), 300);
                     }}
                     className="flex items-center justify-between p-4 bg-gray-50 rounded-xl md:rounded-2xl hover:bg-black hover:text-white transition-all group active:scale-[0.98]"
                   >
-                    <span className="font-bold uppercase tracking-tight text-sm md:text-base">South Hampton Financials</span>
-                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                  </button>
-                  <button
-                    onClick={() => {
-                      setIsDialogOpen(false);
-                      setTimeout(() => setActiveCaseStudy("onlia"), 300);
-                    }}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-xl md:rounded-2xl hover:bg-black hover:text-white transition-all group active:scale-[0.98]"
-                  >
-                    <span className="font-bold uppercase tracking-tight text-sm md:text-base">Onlia Portal Experience</span>
+                    <span className="font-bold uppercase tracking-tight text-sm md:text-base">Homedraft</span>
                     <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                   </button>
                 </div>
@@ -521,7 +660,7 @@ function PortfolioMain() {
       </Dialog>
 
       {/* Section 3: About Me */}
-      <section id="about" className="relative z-10 bg-white py-24 md:py-48 px-6 md:px-8">
+      <section id="about" className="relative z-10 bg-white pt-12 md:pt-20 pb-24 md:pb-48 px-6 md:px-8">
         <div className="w-full max-w-7xl mx-auto">
           {/* Massive Header */}
           <div className="border-b border-gray-200 pb-12 md:pb-20 mb-16 md:mb-32">
@@ -538,15 +677,29 @@ function PortfolioMain() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20">
               <div className="space-y-6 md:space-y-8">
-                <p className="text-2xl md:text-4xl text-black/60 font-light leading-tight">
-                  Product Engineer & Designer crafting digital experiences with <span className="text-black font-medium">precision and purpose</span>.
+                <p className="text-2xl md:text-3xl text-black/70 font-light leading-snug">
+                  I&apos;m a <span className="text-black font-medium">product engineer</span>. I care about product management and building.
                 </p>
+                <div className="space-y-4 text-base md:text-lg text-black/55 font-light leading-relaxed max-w-xl">
+                  <p>
+                    Most of my work has been in insurance tech. I&apos;ve also worked in other industries through contract work and personal projects.
+                  </p>
+                  <p>
+                    I like hard problems — figuring out how things work, improving products, and making them the best on the market. Give me an open problem or a task with little supervision and I&apos;m at my best.
+                  </p>
+                  <p>
+                    Outside of work I&apos;m big on endurance sports. Every summer you&apos;ll find me in triathlons and marathons — I love the community. I&apos;m also a Chelsea fan.
+                  </p>
+                </div>
+                <Link
+                  href="/roadmap"
+                  className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.18em] text-black hover:opacity-60"
+                >
+                  Career road map
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
                 <div className="flex flex-wrap gap-6 md:gap-8 pt-2 md:pt-4">
-                  <Link href="https://github.com/vittorio-sh" target="_blank" className="group flex items-center gap-3 hover:text-orange-500 transition-colors">
-                    <Github className="w-5 h-5 md:w-6 md:h-6" />
-                    <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity">Github</span>
-                  </Link>
-                  <Link href="https://www.linkedin.com/in/vittorio-s-b711952b7" target="_blank" className="group flex items-center gap-3 hover:text-orange-500 transition-colors">
+                  <Link href="https://www.linkedin.com/in/vittorio-shiffman-b711952b7" target="_blank" className="group flex items-center gap-3 hover:text-orange-500 transition-colors">
                     <Linkedin className="w-5 h-5 md:w-6 md:h-6" />
                     <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
                   </Link>
@@ -560,12 +713,13 @@ function PortfolioMain() {
                 <div className="md:text-right border-l-2 md:border-l-0 md:border-r-2 border-orange-500/20 pl-6 md:pl-0 md:pr-12 py-2">
                   <p className="text-[9px] md:text-[10px] font-bold text-black/30 uppercase tracking-[0.3em] md:tracking-[0.4em] mb-2 md:mb-4">Current Location</p>
                   <p className="text-3xl md:text-4xl font-black uppercase tracking-tighter">Montreal, QC</p>
+                  <p className="mt-3 text-sm font-medium text-black/40">Remote · SHF is in Toronto</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Experience List */}
+          {/* Experience List — hidden for now
           <div className="mb-24 md:mb-48">
             <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-10 md:mb-16 px-4 gap-4">
               <h3 className="text-4xl md:text-5xl font-black uppercase tracking-tighter">Experience</h3>
@@ -628,11 +782,9 @@ function PortfolioMain() {
               ))}
             </div>
           </div>
-
-
+          */}
         </div>
       </section>
-
       {/* Section 4: Contact */}
       <section id="contact" className="relative z-10 bg-black text-white py-24 md:py-48 px-6 md:px-8 overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_100%)]" />
@@ -658,8 +810,7 @@ function PortfolioMain() {
             </div>
             <div className="grid grid-cols-1 gap-4">
               {[
-                { label: "LinkedIn", href: "https://www.linkedin.com/in/vittorio-s-b711952b7", icon: <Linkedin className="w-5 h-5" /> },
-                { label: "GitHub", href: "https://github.com/vittorio-sh", icon: <Github className="w-5 h-5" /> }
+                { label: "LinkedIn", href: "https://www.linkedin.com/in/vittorio-shiffman-b711952b7", icon: <Linkedin className="w-5 h-5" /> }
               ].map((item, i) => (
                 <Link
                   key={i}
@@ -720,6 +871,7 @@ function PortfolioMain() {
           </motion.footer>
         )}
       </AnimatePresence>
+      {!activeCaseStudy && <PortfolioChat />}
     </main>
   );
 }

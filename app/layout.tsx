@@ -14,9 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vittorio | Product Designer & Engineer",
-  description: "Portfolio of Vittorio, Product Designer & Engineer specializing in technical systems.",
+  title: "Vittorio | Product Engineer",
+  description: "Portfolio of Vittorio Shiffman, product engineer focused on product management and building.",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png" }],
+  },
 };
 
 import { Analytics } from "@vercel/analytics/next";
