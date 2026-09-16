@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import NextLink from "next/link";
 import { Send } from "lucide-react";
 import SiteHeader from "@/components/site-header";
 import RoadmapContent from "@/components/roadmap-content";
@@ -17,6 +18,59 @@ const GREETING: ChatMessage = {
     role: "assistant",
     content: "Hi — I'm Vitto AI. Ask me about Vittorio's work, projects, and how to reach him.",
 };
+
+const LINK_PATTERN = /(https?:\/\/[^\s]+)|([\w.+-]+@[\w-]+\.[\w.-]+)|(\/roadmap\b)/g;
+const TRAILING_PUNCT = /[).,;:!?]+$/;
+
+function linkifyMessage(text: string): React.ReactNode[] {
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+    let key = 0;
+
+    while ((match = LINK_PATTERN.exec(text)) !== null) {
+        const raw = match[0];
+        const start = match.index;
+        const end = start + raw.length;
+
+        if (start > lastIndex) parts.push(text.slice(lastIndex, start));
+
+        const trailMatch = raw.match(TRAILING_PUNCT);
+        const trail = trailMatch ? trailMatch[0] : "";
+        const value = trail ? raw.slice(0, raw.length - trail.length) : raw;
+
+        if (value.startsWith("/roadmap")) {
+            parts.push(
+                <NextLink
+                    key={key++}
+                    href={value}
+                    className="font-medium text-black underline decoration-black/25 underline-offset-2 hover:decoration-black"
+                >
+                    {value}
+                </NextLink>
+            );
+        } else {
+            const isEmail = value.includes("@") && !value.startsWith("http");
+            parts.push(
+                <a
+                    key={key++}
+                    href={isEmail ? `mailto:${value}` : value}
+                    target={isEmail ? undefined : "_blank"}
+                    rel={isEmail ? undefined : "noopener noreferrer"}
+                    className="font-medium text-black underline decoration-black/25 underline-offset-2 hover:decoration-black"
+                >
+                    {value}
+                </a>
+            );
+        }
+
+        if (trail) parts.push(trail);
+        lastIndex = end;
+    }
+
+    if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+    return parts;
+}
 
 const SUGGESTIONS = [
     { label: "How does this work?", prompt: "How does this page work?" },
@@ -145,7 +199,7 @@ export default function HomePage() {
                                             : "max-w-[90%] text-[15px] leading-relaxed text-black/75"
                                     }
                                 >
-                                    {m.content}
+                                    {m.role === "assistant" ? linkifyMessage(m.content) : m.content}
                                 </div>
                             ))}
                             {loading && (

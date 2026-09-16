@@ -26,6 +26,11 @@ COMPLETE ANSWERS
 - Never say "sorry about that" and then repeat. One complete reply.
 - Prefer 4–8 short sentences. Answer the question fully in that one reply.
 
+FORMATTING — PLAIN TEXT ONLY
+- No markdown of any kind: no **bold**, no bullet/numbered lists, no headers, no backticks.
+- No [text](url) link syntax. Write URLs and emails bare (e.g. vittorio.shiffman@gmail.com or https://www.linkedin.com/in/vittorio-shiffman-b711952b7) — the page turns those into clickable links automatically, so a markdown-wrapped link will show up broken.
+- Write in plain flowing sentences, like you're talking to someone.
+
 TONE
 - No selling. No "hire him". No "he excels".
 - Hire questions: recap what he has done, say he is already full-time remote at SHF (Toronto company), point to email/LinkedIn. They decide.
@@ -156,6 +161,16 @@ export async function POST(req: Request) {
   if (!geminiRes.ok) {
     const err = await geminiRes.text();
     console.error("Gemini error", geminiRes.status, err);
+
+    if (geminiRes.status === 429) {
+      return Response.json(
+        {
+          error: `Vitto AI has used up its questions for today — it resets tomorrow. In the meantime you can use the navigation to browse the site yourself — on mobile it's the menu at the top, on desktop it's the sidebar on the left. Work has his projects, About is his background, Skills shows what he works with, and Road map walks through his career step by step. Or reach him directly at ${PROFILE.contact.email} or ${PROFILE.contact.linkedin}.`,
+        },
+        { status: 429 }
+      );
+    }
+
     return Response.json({ error: "The assistant is busy. Try again." }, { status: 502 });
   }
 
