@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { Send } from "lucide-react";
 import SiteHeader from "@/components/site-header";
 import RoadmapContent from "@/components/roadmap-content";
@@ -148,9 +149,14 @@ export default function HomePage() {
                                 </div>
                             ))}
                             {loading && (
-                                <p className="text-[12px] uppercase tracking-[0.16em] text-black/30">
-                                    Thinking…
-                                </p>
+                                <div className="flex items-center gap-2.5">
+                                    <span className="relative h-5 w-5 animate-[pulse_1.1s_ease-in-out_infinite]">
+                                        <Image src="/icon.svg" alt="" fill sizes="20px" className="object-contain" />
+                                    </span>
+                                    <span className="text-[12px] uppercase tracking-[0.16em] text-black/30">
+                                        Thinking
+                                    </span>
+                                </div>
                             )}
                             <div ref={bottomRef} />
                         </div>

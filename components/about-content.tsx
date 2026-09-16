@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Linkedin, Mail, MapPin, Route } from "lucide-react";
+import { ArrowUpRight, Linkedin, Mail, Route } from "lucide-react";
 
 export default function AboutContent({ onRoadmap }: { onRoadmap?: () => void }) {
     return (
@@ -14,111 +14,51 @@ export default function AboutContent({ onRoadmap }: { onRoadmap?: () => void }) 
                 I&apos;m a <span className="text-black font-medium">product engineer</span>. I care about product management and building.
             </p>
 
-            <div className="mt-10 max-w-2xl rounded-[1.5rem] border border-black/10 bg-white p-6 shadow-sm md:p-7">
-                <div className="space-y-4 text-[15px] leading-relaxed text-black/60">
-                    <p>
-                        Most of my work has been in insurance tech. I&apos;ve also worked in other industries through contract work and personal projects.
-                    </p>
-                    <p>
-                        I like hard problems — figuring out how things work, improving products, and making them the best on the market. Give me an open problem or a task with little supervision and I&apos;m at my best.
-                    </p>
-                    <p>
-                        Outside of work I&apos;m big on endurance sports. Every summer you&apos;ll find me in triathlons and marathons — I love the community. I&apos;m also a Chelsea fan.
-                    </p>
-                </div>
+            <div className="mt-6 max-w-2xl space-y-4 text-[15px] leading-relaxed text-black/60">
+                <p>
+                    Most of my work has been in insurance tech, with additional experience across other industries through contract work and personal projects. I like hard problems — figuring out how things work, improving products, and making them the best on the market. Give me an open problem or a task with little supervision and I&apos;m at my best.
+                </p>
+                <p>
+                    I&apos;m based in Montreal, QC, and work remote for Southampton Financial, which is based in Toronto. Outside of work I&apos;m big on endurance sports — every summer you&apos;ll find me in triathlons and marathons, and I love the community around it. I&apos;m also a Chelsea fan.
+                </p>
             </div>
 
-            <div className="mt-4 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-2">
-                <div className="flex items-center gap-4 rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm md:p-6">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                        <MapPin className="h-5 w-5 text-orange-600" />
-                    </span>
-                    <span>
-                        <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">
-                            Current location
-                        </span>
-                        <span className="mt-0.5 block text-[15px] font-medium text-black">Montreal, QC</span>
-                        <span className="mt-0.5 block text-[12px] text-black/40">Remote · SHF is in Toronto</span>
-                    </span>
-                </div>
-
+            <div className="mt-8 flex max-w-2xl flex-wrap items-center gap-x-6 gap-y-3">
                 {onRoadmap ? (
                     <button
                         type="button"
                         onClick={onRoadmap}
-                        className="group flex items-center justify-between rounded-[1.5rem] border border-black/10 bg-white p-5 text-left shadow-sm transition-shadow hover:shadow-md md:p-6"
+                        className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/60 hover:text-black"
                     >
-                        <span className="flex items-center gap-4">
-                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                                <Route className="h-5 w-5 text-orange-600" />
-                            </span>
-                            <span>
-                                <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">
-                                    Career
-                                </span>
-                                <span className="mt-0.5 block text-[15px] font-medium text-black">Road map</span>
-                            </span>
-                        </span>
-                        <ArrowUpRight className="h-4 w-4 shrink-0 text-black/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black" />
+                        <Route className="h-3.5 w-3.5" />
+                        Career road map
+                        <ArrowUpRight className="h-3.5 w-3.5" />
                     </button>
                 ) : (
                     <Link
                         href="/roadmap"
-                        className="group flex items-center justify-between rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm transition-shadow hover:shadow-md md:p-6"
+                        className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/60 hover:text-black"
                     >
-                        <span className="flex items-center gap-4">
-                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                                <Route className="h-5 w-5 text-orange-600" />
-                            </span>
-                            <span>
-                                <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">
-                                    Career
-                                </span>
-                                <span className="mt-0.5 block text-[15px] font-medium text-black">Road map</span>
-                            </span>
-                        </span>
-                        <ArrowUpRight className="h-4 w-4 shrink-0 text-black/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black" />
+                        <Route className="h-3.5 w-3.5" />
+                        Career road map
+                        <ArrowUpRight className="h-3.5 w-3.5" />
                     </Link>
                 )}
-
                 <Link
                     href="https://www.linkedin.com/in/vittorio-shiffman-b711952b7"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center justify-between rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm transition-shadow hover:shadow-md md:p-6"
+                    className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/60 hover:text-black"
                 >
-                    <span className="flex items-center gap-4">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                            <Linkedin className="h-5 w-5 text-orange-600" />
-                        </span>
-                        <span>
-                            <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">
-                                LinkedIn
-                            </span>
-                            <span className="mt-0.5 block text-[15px] font-medium text-black">vittorio-shiffman</span>
-                        </span>
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-black/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black" />
+                    <Linkedin className="h-3.5 w-3.5" />
+                    LinkedIn
                 </Link>
-
                 <Link
                     href="mailto:vittorio.shiffman@gmail.com"
-                    className="group flex items-center justify-between rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm transition-shadow hover:shadow-md md:p-6"
+                    className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/60 hover:text-black"
                 >
-                    <span className="flex items-center gap-4">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                            <Mail className="h-5 w-5 text-orange-600" />
-                        </span>
-                        <span>
-                            <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">
-                                Email
-                            </span>
-                            <span className="mt-0.5 block break-all text-[15px] font-medium text-black">
-                                vittorio.shiffman@gmail.com
-                            </span>
-                        </span>
-                    </span>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-black/30 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-black" />
+                    <Mail className="h-3.5 w-3.5" />
+                    vittorio.shiffman@gmail.com
                 </Link>
             </div>
         </div>

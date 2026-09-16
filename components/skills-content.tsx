@@ -15,6 +15,9 @@ import {
     SiGoogletagmanager,
     SiGit,
     SiJira,
+    SiCursor,
+    SiClaude,
+    SiGooglegemini,
 } from "react-icons/si";
 import {
     Cloud,
@@ -24,6 +27,7 @@ import {
     RefreshCw,
     ClipboardList,
     Users,
+    Sparkles,
     MessageCircleQuestion,
     FolderSearch,
     ArrowUpRight,
@@ -37,6 +41,10 @@ const ICONS: Record<string, { icon: IconType | typeof Cloud; color: string }> = 
     requirements: { icon: ClipboardList, color: "#D97706" },
     stakeholder: { icon: Users, color: "#DB2777" },
     jira: { icon: SiJira, color: "#0052CC" },
+    cursor: { icon: SiCursor, color: "#111111" },
+    claude: { icon: SiClaude, color: "#D97757" },
+    gemini: { icon: SiGooglegemini, color: "#4285F4" },
+    "ai-automation": { icon: Sparkles, color: "#8B5CF6" },
     typescript: { icon: SiTypescript, color: "#3178C6" },
     javascript: { icon: SiJavascript, color: "#F0DB4F" },
     react: { icon: SiReact, color: "#61DAFB" },
@@ -88,7 +96,8 @@ function SkillGrid({ skills }: { skills: readonly ProfileSkill[] }) {
 
 export default function SkillsContent({ onAskAi }: { onAskAi?: () => void }) {
     const productSkills = PROFILE.skills.filter((s) => s.category === "Product");
-    const technicalSkills = PROFILE.skills.filter((s) => s.category !== "Product");
+    const aiSkills = PROFILE.skills.filter((s) => s.category === "AI");
+    const technicalSkills = PROFILE.skills.filter((s) => s.category !== "Product" && s.category !== "AI");
 
     return (
         <div className="px-6 md:px-10 pb-16 pt-10 md:pt-14">
@@ -101,6 +110,13 @@ export default function SkillsContent({ onAskAi }: { onAskAi?: () => void }) {
             </p>
             <div className="mt-4">
                 <SkillGrid skills={productSkills} />
+            </div>
+
+            <p className="mt-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-black/35">
+                AI
+            </p>
+            <div className="mt-4">
+                <SkillGrid skills={aiSkills} />
             </div>
 
             <p className="mt-10 text-[11px] font-semibold uppercase tracking-[0.2em] text-black/35">
