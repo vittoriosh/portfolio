@@ -63,31 +63,21 @@ const ICONS: Record<string, { icon: IconType | typeof Cloud; color: string }> = 
 
 function SkillGrid({ skills }: { skills: readonly ProfileSkill[] }) {
     return (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+        <div className="flex flex-wrap gap-2.5">
             {skills.map((skill) => {
                 const entry = ICONS[skill.id];
                 const Icon = entry?.icon ?? Cloud;
                 const color = entry?.color ?? "#111111";
                 return (
-                    <div
+                    <span
                         key={skill.id}
-                        className="flex flex-col items-center gap-3 rounded-[1.5rem] border border-black/10 bg-white p-5 text-center shadow-sm transition-shadow hover:shadow-md"
+                        className="inline-flex items-center gap-2.5 rounded-full border border-black/10 bg-white py-2 pl-3 pr-4 shadow-sm transition-shadow hover:shadow-md"
                     >
-                        <span
-                            className="flex h-12 w-12 items-center justify-center rounded-2xl"
-                            style={{ backgroundColor: `${color}1A` }}
-                        >
-                            <Icon className="h-6 w-6" style={{ color }} />
+                        <Icon className="h-4 w-4 shrink-0" style={{ color }} />
+                        <span className="text-[13px] font-medium tracking-tight text-black/80">
+                            {skill.name}
                         </span>
-                        <span>
-                            <span className="block text-[13px] font-semibold tracking-tight text-black">
-                                {skill.name}
-                            </span>
-                            <span className="mt-0.5 block text-[10px] font-medium uppercase tracking-[0.14em] text-black/35">
-                                {skill.category}
-                            </span>
-                        </span>
-                    </div>
+                    </span>
                 );
             })}
         </div>
