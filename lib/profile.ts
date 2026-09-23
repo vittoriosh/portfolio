@@ -100,7 +100,7 @@ export const PROFILE = {
         {
             id: "runcost",
             title: "runCost",
-            url: "https://runcost-pi.vercel.app/",
+            url: "https://www.autospend.app/",
             summary:
                 "A Canadian vehicle research platform on 10,000+ cars — IBC claim indexes, NRCan fuel ratings, and NHTSA safety data, with AI Q&A wired through Claude, Gemini, and ChatGPT. ~500+ monthly traffic.",
         },

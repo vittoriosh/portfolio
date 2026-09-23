@@ -32,7 +32,7 @@ export const WORKS = [
             { src: "/images/ai/gemini.svg", alt: "Gemini" },
             { src: "/images/ai/chatgpt.svg", alt: "ChatGPT" },
         ],
-        url: "https://runcost-pi.vercel.app/",
+        url: "https://www.autospend.app/",
         liveLabel: "Live",
         caseStudy: true,
         cta: "View details",

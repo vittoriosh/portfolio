@@ -44,7 +44,7 @@ export default function RuncostDetails({ onClose }: CaseStudyProps) {
                     A lookup that compares vehicles on relative insurance claim cost, fuel use, and safety — so you can see if one car is likely more expensive to insure than another. Not a quote. Insurers do not publish premiums by model. IBC claim indexes are the closest public signal. I added NRCan fuel ratings and NHTSA safety data, then built a four-car compare, guides, and charts.
                 </p>
                 <a
-                    href="https://runcost-pi.vercel.app/"
+                    href="https://www.autospend.app/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em] text-white"
@@ -146,7 +146,7 @@ export default function RuncostDetails({ onClose }: CaseStudyProps) {
 
                 <div className="mt-12 flex flex-wrap items-center gap-3">
                     <a
-                        href="https://runcost-pi.vercel.app/"
+                        href="https://www.autospend.app/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em] text-white"
