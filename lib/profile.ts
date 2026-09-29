@@ -67,7 +67,7 @@ export const PROFILE = {
             id: "pause",
             title: "A pause on side work",
             when: "Break",
-            summary: "Kept the full-time job; the extra side work was burning him out, so he paused it. A deliberate pause, not a stop.",
+            summary: "Stepped back from outside contract work to concentrate on the full-time role and maintain a sustainable pace. A deliberate pause, not a stop.",
         },
         {
             id: "homedraft",

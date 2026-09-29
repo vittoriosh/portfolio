@@ -22,56 +22,56 @@ const STEPS: {
 }[] = [
     {
         title: "VirtuMed",
-        when: "Before corporate",
+        when: "Pre-corporate",
         team: 3,
-        body: "Before my corporate career, I co-built VirtuMed alongside a neurosurgeon and a master's student in AI. We shipped a first version of an LLM platform for medical practitioners and presented it to a hospital in the US. The venture didn't continue past that pitch, but it was my first real product build under pressure.",
+        body: "Co-developed VirtuMed with a neurosurgeon and a master's student in AI: an LLM platform built for medical practitioners. We delivered a working first version and presented it to a hospital in the United States. The venture did not proceed beyond that presentation, but it was my first experience taking a product from concept to stakeholder demo under real time pressure.",
     },
     {
-        title: "First corporate job",
-        when: "Still here",
+        title: "Software Developer, Insurance Technology",
+        when: "Current",
         team: 7,
-        body: "I joined a small team running insurance software for several portfolio companies — Aha, Onlia, Cheep, and Alteri — based in Toronto, fully remote. With one or two people per domain, the expectation is simple: jump in anywhere.",
-        more: "I started on the frontend of the legacy platform and kept expanding scope — learning the stack, running a white-label launch, shipping new products, improving existing features, building automation, wiring up marketing tracking, and building dashboards for both business and marketing teams. Along the way I picked up AWS, Figma, and Google Tag Manager, got sharp at debugging, and now know the system end-to-end — data models, flows, all of it.",
+        body: "I joined a seven-person technology team supporting insurance platforms for several portfolio companies, including Aha, Onlia, Cheep, and Alteri. The company is based in Toronto, and I work fully remotely. With one or two people covering each domain, the role requires ownership across the entire stack.",
+        more: "I began on the frontend of the legacy platform and steadily broadened my scope: delivering a white-label launch, shipping new products, improving existing features, building automation, implementing marketing tracking, and creating dashboards for the business and marketing teams. In the process I gained hands-on experience with AWS, Figma, and Google Tag Manager, became a strong debugger, and developed end-to-end knowledge of the system's data models and flows.",
     },
     {
         title: "Prizm AI",
-        when: "Contract · USA",
+        when: "Contract · United States",
         team: 5,
-        body: "I took on contract work at a US startup building AI agents that generate KPIs — mostly frontend, plus helping define the data model and how information should move from frontend to backend. I also designed and built their public website.",
+        body: "Contract engagement with a U.S. startup building AI agents that generate business KPIs. My work centred on the frontend, and I contributed to the data model design and to how information flows between the frontend and backend. I also designed and built the company's public website.",
     },
     {
-        title: "Mining data & news",
-        when: "Contract · ~3 months",
+        title: "Mining Intelligence Platform",
+        when: "Contract · 3 months",
         team: 2,
-        body: "A Toronto-based mining analyst needed a platform to track mines — production volumes, locations, ownership. The real value was the news layer: scrapers that caught events like a flood hitting a mine and notified users in real time. I put significant hours into this over about three months.",
+        body: "Built a platform for a Toronto-based mining analyst to track mine production volumes, locations, and ownership. The core value was a real-time news layer: scrapers that detected material events, such as flooding at a mine site, and notified users immediately. This was a substantial engagement over roughly three months.",
     },
     {
         title: "PortOptix",
         when: "Contract",
         team: 3,
-        body: "An AI platform for private equity — ingesting portfolio company data, analyzing it, and surfacing savings opportunities for the firm. I led code cleanup, set up authentication, and hardened the database, and wired integrations like QuickBooks for easy data intake.",
-        more: "Working alongside two co-owners who'd already sold a company once, I learned how a more experienced team operates — and asked a lot of questions along the way.",
+        body: "An AI platform for private equity firms that ingests portfolio company data, analyzes it, and surfaces cost-saving opportunities. I led the codebase cleanup, implemented authentication, hardened the database, and built integrations such as QuickBooks to streamline data intake.",
+        more: "Working alongside two owners who had previously built and sold a company gave me direct exposure to how an experienced team operates, and I made a point of learning from them throughout the engagement.",
     },
     {
-        title: "A pause on side work",
-        when: "Break",
-        body: "I kept the full-time role but stepped back from outside contracts — the pace was unsustainable. A deliberate pause, not a stop.",
+        title: "Refocus on core role",
+        when: "Pause",
+        body: "I stepped back from outside contract work to concentrate on my full-time role and maintain a sustainable pace. This was a deliberate pause rather than a stop.",
     },
     {
         title: "Homedraft",
         when: "Personal project",
         team: 1,
         href: "https://app.homedraft.ca/",
-        linkLabel: "Open live",
-        body: "I founded Homedraft to connect homeowners with certified contractors — surfacing the grants and loans they qualify for on home renovations, then making it easy to engage a contractor. I built a polished v1 before setting the company aside; the live app is still running.",
+        linkLabel: "View live",
+        body: "I founded Homedraft to connect homeowners with certified contractors. The platform identifies the renovation grants and loans a household qualifies for, then simplifies the process of engaging a contractor. I built and launched a polished v1 before setting the company aside; the application remains live.",
     },
     {
         title: "Matchday Manager",
         when: "Personal project",
         team: 1,
         href: "https://sevens-labs.vercel.app/",
-        linkLabel: "Open live",
-        body: "My first game. Outside my usual domain, but I like football and strategy, so I built a web strategy game on real soccer stats datasets — drafting a team with a real strategic layer.",
+        linkLabel: "View live",
+        body: "My first game, and a deliberate step outside my usual domain. Drawing on an interest in football and strategy, I built a web-based strategy game on real soccer statistics datasets, in which players draft a squad with a meaningful strategic layer. It has since reached 100+ unique users and 1,000+ plays.",
     },
 ];
 
@@ -93,8 +93,9 @@ export default function RoadmapContent({ showHomeLink = true }: { showHomeLink?:
                 Road map
             </h1>
             <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-black/55">
-                Eight stops — a full-time role and the contracts and personal projects built
-                alongside it. Still at the first corporate job; everything else happened around it.
+                Eight milestones across a full-time role, contract engagements, and independent
+                products. I remain in my first corporate role; the contract and personal work was
+                delivered alongside it.
             </p>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
@@ -120,7 +121,7 @@ export default function RoadmapContent({ showHomeLink = true }: { showHomeLink?:
                                 <h2 className="text-lg md:text-xl font-semibold tracking-tight">{step.title}</h2>
                                 <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-black/40">
                                     {step.when}
-                                    {step.team ? ` · Team of ${step.team}` : ""}
+                                    {step.team === 1 ? " · Solo" : step.team ? ` · Team of ${step.team}` : ""}
                                 </p>
                             </div>
                             <p className="mt-3 text-[15px] leading-relaxed text-black/70">{step.body}</p>

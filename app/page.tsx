@@ -131,7 +131,7 @@ export default function HomePage() {
     const empty = messages.length <= 1;
 
     return (
-        <div className="flex h-dvh overflow-hidden bg-[#f7f7f5] text-black font-sans">
+        <div className="flex h-dvh overflow-hidden bg-white text-black font-sans">
             <SiteHeader
                 variant="rail"
                 onNewChat={newChat}
