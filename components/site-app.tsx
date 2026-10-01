@@ -6,8 +6,9 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { Menu, Send, X } from "lucide-react";
+import { Menu, Send, SquarePen, X } from "lucide-react";
 import HelloHeading from "@/components/hello-heading";
+import { PROFILE } from "@/lib/profile";
 
 const HomeScene = dynamic(() => import("@/components/home-scene"), { ssr: false });
 // Each page is its own chunk, so a visitor only downloads the page they're on; the others load
@@ -15,17 +16,18 @@ const HomeScene = dynamic(() => import("@/components/home-scene"), { ssr: false 
 const HomeSections = dynamic(() => import("@/components/home-sections"));
 const WorkPage = dynamic(() => import("@/components/work-page"));
 const AboutContent = dynamic(() => import("@/components/about-content"));
-const SkillsContent = dynamic(() => import("@/components/skills-content"));
+const SkillsPage = dynamic(() => import("@/components/skills-page"));
 const RoadmapContent = dynamic(() => import("@/components/roadmap-content"));
 const ContactContent = dynamic(() => import("@/components/contact-content"));
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
-type View = "chat" | "roadmap" | "work" | "about" | "skills" | "contact";
+type View = "home" | "chat" | "roadmap" | "work" | "about" | "skills" | "contact";
 
 // Every view has its own URL. The whole site lives in one persistent layout, so moving between
 // pages keeps the chat history and animates instead of doing a full page load.
 const VIEW_PATHS: Record<View, string> = {
-    chat: "/",
+    home: "/",
+    chat: "/chat",
     work: "/work",
     about: "/about",
     skills: "/skills",
@@ -35,7 +37,8 @@ const VIEW_PATHS: Record<View, string> = {
 
 // Under the name in the nav: the role on the home screen, otherwise what the visitor is doing.
 const NAV_SUBTITLES: Record<View, string> = {
-    chat: "Product Engineer",
+    home: "Product Engineer",
+    chat: "Asking Vitto AI",
     work: "Exploring work",
     about: "About me",
     skills: "Exploring skills",
@@ -45,7 +48,7 @@ const NAV_SUBTITLES: Record<View, string> = {
 
 // Pages that open with a full-screen hero get the big water chat card until you scroll; the
 // rest are plain content pages and use the slim floating chat bar from the start.
-const HERO_VIEWS: View[] = ["chat", "work"];
+const HERO_VIEWS: View[] = ["home", "work", "skills"];
 
 // Defers heavy content below the fold (the 3D bike: three.js plus its model) so it doesn't
 // compete with the first paint. It mounts once the browser is idle after load, or as soon as
@@ -90,7 +93,7 @@ function LazyMount({ className, children }: { className?: string; children: Reac
 
 function viewFromPath(path: string): View {
     const match = (Object.keys(VIEW_PATHS) as View[]).find((v) => VIEW_PATHS[v] === path);
-    return match ?? "chat";
+    return match ?? "home";
 }
 
 const GREETING: ChatMessage = {
@@ -165,7 +168,6 @@ export default function SiteApp() {
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
     const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
-    const messagesRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -201,24 +203,36 @@ export default function SiteApp() {
     }
 
     function goHome() {
-        openView("chat");
+        openView("home");
     }
 
-    // Keep the newest message in view by scrolling only the message list. (scrollIntoView would
-    // also scroll the page itself and pull the visitor down past the chat.)
+    function newChat() {
+        setMessages([GREETING]);
+        setInput("");
+        inputRef.current?.focus();
+    }
+
+    // On /chat, keep the newest message in view.
     useEffect(() => {
-        const el = messagesRef.current;
-        if (!el) return;
-        const frame = requestAnimationFrame(() => el.scrollTo({ top: el.scrollHeight, behavior: "smooth" }));
+        if (view !== "chat") return;
+        const frame = requestAnimationFrame(() => {
+            const el = scrollRef.current;
+            el?.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+        });
         return () => cancelAnimationFrame(frame);
-    }, [messages, loading]);
+    }, [view, messages, loading]);
+
+    // Arriving on /chat with a pointer device: put the cursor in the input (not on touch screens,
+    // where it would pop the keyboard over the conversation).
+    useEffect(() => {
+        if (view === "chat" && window.matchMedia("(pointer: fine)").matches) inputRef.current?.focus();
+    }, [view]);
 
     async function send(preset?: string) {
         const text = (preset ?? input).trim();
         if (!text || loading) return;
-        // Conversations live on the home screen: asking from another page brings you back to it.
+        // Conversations live on /chat: asking from any other page takes you there.
         if (view !== "chat") openView("chat");
-        else if (scrolled) scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
         const next = [...messages, { role: "user" as const, content: text }];
         setMessages(next);
         setInput("");
@@ -281,7 +295,7 @@ export default function SiteApp() {
         );
     }
 
-    const empty = messages.length <= 1;
+    const conversation = messages.filter((m) => m !== GREETING);
 
     return (
         <div
@@ -372,6 +386,36 @@ export default function SiteApp() {
                                     {item.label}
                                 </motion.button>
                             ))}
+                            {/* Contact links with 3D-rendered icons (pre-rendered PNGs from 3D models). */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, transition: { duration: 0.15 } }}
+                                transition={{ delay: 0.15 + MENU.length * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                className="mt-6 flex items-center gap-6 md:mt-10"
+                            >
+                                {[
+                                    { href: `mailto:${PROFILE.contact.email}`, src: "/icons/email-3d.png", label: "Email" },
+                                    { href: PROFILE.contact.linkedin, src: "/icons/linkedin-3d.png", label: "LinkedIn" },
+                                ].map((link) => (
+                                    <a
+                                        key={link.src}
+                                        href={link.href}
+                                        target={link.href.startsWith("http") ? "_blank" : undefined}
+                                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                        className="group flex items-center gap-2.5 rounded-full py-2 pl-2 pr-4 text-[14px] font-medium text-black/60 transition-colors hover:bg-black/5 hover:text-black"
+                                    >
+                                        <Image
+                                            src={link.src}
+                                            alt=""
+                                            width={40}
+                                            height={40}
+                                            className="h-10 w-10 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-110"
+                                        />
+                                        {link.label}
+                                    </a>
+                                ))}
+                            </motion.div>
                         </nav>
                     </motion.div>
                 )}
@@ -384,74 +428,17 @@ export default function SiteApp() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
                 transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                className={view === "chat" ? undefined : "pb-56"}
+                // Room at the bottom so the last content clears the floating chat bar.
+                className={view === "home" ? "pb-28 md:pb-32" : view === "chat" ? undefined : "pb-56"}
             >
-            {view === "chat" ? (
+            {view === "home" ? (
                 <>
                     <section className="flex h-[calc(100dvh-5rem)] flex-col">
-                        <div ref={messagesRef} className="min-h-0 flex-1 overflow-y-auto">
-                    <AnimatePresence mode="wait" initial={false}>
-                    {empty ? (
-                        <motion.div
-                            key="welcome"
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -16, filter: "blur(4px)" }}
-                            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                            className="flex h-full flex-col items-center justify-center px-6 pb-6"
-                        >
+                        <div className="flex min-h-0 flex-1 flex-col items-center justify-center px-6 pb-6">
                             <HelloHeading />
-                            <div className="flex animate-fade-in flex-col items-center [animation-delay:0.5s] motion-reduce:animate-none">
-                                <p className="mt-4 text-center text-[15px] text-black/45">
-                                    Ask me anything about Vittorio&apos;s work.
-                                </p>
-                            </div>
-                        </motion.div>
-                    ) : (
-                        <motion.div
-                            key="conversation"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.2 }}
-                            className="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-8 md:px-6"
-                        >
-                            {messages.filter((m) => m !== GREETING).map((m, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 14, scale: m.role === "user" ? 0.97 : 1 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                    className={
-                                        m.role === "user"
-                                            ? "ml-auto w-fit max-w-[85%] origin-bottom-right whitespace-pre-wrap break-words rounded-3xl bg-neutral-100 px-4 py-3 text-[15px] leading-relaxed text-black"
-                                            : "max-w-[90%] whitespace-pre-wrap break-words text-[15px] leading-relaxed text-black/75"
-                                    }
-                                >
-                                    {m.role === "assistant" ? linkifyMessage(m.content) : m.content}
-                                </motion.div>
-                            ))}
-                            <AnimatePresence>
-                                {loading && (
-                                    <motion.div
-                                        key="thinking"
-                                        initial={{ opacity: 0, y: 8 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, transition: { duration: 0.15 } }}
-                                        transition={{ duration: 0.3, delay: 0.15 }}
-                                        className="flex items-center gap-2.5"
-                                    >
-                                        <span className="relative h-5 w-5 animate-[pulse_1.1s_ease-in-out_infinite]">
-                                            <Image src="/icon.svg" alt="" fill sizes="20px" className="object-contain" />
-                                        </span>
-                                        <span className="text-[12px] uppercase tracking-[0.16em] text-black/30">
-                                            Thinking
-                                        </span>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </motion.div>
-                    )}
-                    </AnimatePresence>
+                            <p className="mt-4 animate-fade-in text-center text-[15px] text-black/45 [animation-delay:0.5s] motion-reduce:animate-none">
+                                Ask me anything about Vittorio&apos;s work.
+                            </p>
                         </div>
 
                 <div
@@ -503,6 +490,68 @@ export default function SiteApp() {
 
                     <HomeSections onOpen={openView} />
                 </>
+            ) : view === "chat" ? (
+                <section className="mx-auto flex min-h-[calc(100dvh-5rem)] w-full max-w-2xl flex-col px-4 pb-48 pt-4 md:px-6">
+                    <div className="flex h-8 items-center justify-between">
+                        <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">Vitto AI</p>
+                        {conversation.length > 0 && (
+                            <button
+                                type="button"
+                                onClick={newChat}
+                                className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] text-black/50 hover:bg-black/5 hover:text-black"
+                            >
+                                <SquarePen className="h-3.5 w-3.5" />
+                                New chat
+                            </button>
+                        )}
+                    </div>
+
+                    {conversation.length === 0 ? (
+                        <div className="flex flex-1 flex-col items-center justify-center pb-16 text-center">
+                            <h1 className="text-[clamp(2.75rem,8vw,5rem)] font-semibold leading-none tracking-[-0.04em]">
+                                Ask me anything.
+                            </h1>
+                            <p className="mt-4 max-w-sm text-[15px] text-black/45">
+                                About Vittorio&apos;s work, projects, skills, or how to reach him.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="mt-6 flex flex-col gap-6">
+                            {conversation.map((m, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 14, scale: m.role === "user" ? 0.97 : 1 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                    className={
+                                        m.role === "user"
+                                            ? "ml-auto w-fit max-w-[85%] origin-bottom-right whitespace-pre-wrap break-words rounded-3xl bg-neutral-100 px-4 py-3 text-[15px] leading-relaxed text-black"
+                                            : "max-w-[90%] whitespace-pre-wrap break-words text-[15px] leading-relaxed text-black/75"
+                                    }
+                                >
+                                    {m.role === "assistant" ? linkifyMessage(m.content) : m.content}
+                                </motion.div>
+                            ))}
+                            <AnimatePresence>
+                                {loading && (
+                                    <motion.div
+                                        key="thinking"
+                                        initial={{ opacity: 0, y: 8 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, transition: { duration: 0.15 } }}
+                                        transition={{ duration: 0.3, delay: 0.15 }}
+                                        className="flex items-center gap-2.5"
+                                    >
+                                        <span className="relative h-5 w-5 animate-[pulse_1.1s_ease-in-out_infinite]">
+                                            <Image src="/icon.svg" alt="" fill sizes="20px" className="object-contain" />
+                                        </span>
+                                        <span className="text-[12px] uppercase tracking-[0.16em] text-black/30">Thinking</span>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    )}
+                </section>
             ) : view === "roadmap" ? (
                 <div className="mx-auto max-w-5xl">
                     <RoadmapContent showHomeLink={false} />
@@ -514,9 +563,7 @@ export default function SiteApp() {
                     <AboutContent onRoadmap={() => openView("roadmap")} />
                 </div>
             ) : view === "skills" ? (
-                <div className="mx-auto max-w-5xl">
-                    <SkillsContent onAskAi={goHome} />
-                </div>
+                <SkillsPage onAskAi={() => openView("chat")} />
             ) : (
                 <div className="mx-auto max-w-5xl">
                     <ContactContent />
@@ -526,7 +573,23 @@ export default function SiteApp() {
             </AnimatePresence>
 
             <AnimatePresence>
-                {view === "work" && !scrolled ? (
+                {view === "chat" ? (
+                    <motion.div
+                        key="chat-input"
+                        initial={{ y: 40, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 40, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 320, damping: 32 }}
+                        className="fixed inset-x-0 bottom-0 z-30 bg-gradient-to-t from-white from-60% to-white/0 px-4 pb-4 pt-10 md:pb-6"
+                    >
+                        <div className="mx-auto w-full max-w-2xl">
+                            {renderChatForm("shadow-lg", true)}
+                            <p className="mt-2 text-center text-[11px] text-black/30">
+                                Vitto AI can be wrong. Check the work on the site.
+                            </p>
+                        </div>
+                    </motion.div>
+                ) : view !== "home" && HERO_VIEWS.includes(view) && !scrolled ? (
                     <motion.div
                         key="page-chat"
                         initial={{ y: 80, opacity: 0 }}

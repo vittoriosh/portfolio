@@ -34,7 +34,7 @@ import {
 } from "lucide-react";
 import { PROFILE, type ProfileSkill } from "@/lib/profile";
 
-const ICONS: Record<string, { icon: IconType | typeof Cloud; color: string }> = {
+export const ICONS: Record<string, { icon: IconType | typeof Cloud; color: string }> = {
     "product-strategy": { icon: Target, color: "#2563EB" },
     roadmapping: { icon: Map, color: "#7C3AED" },
     agile: { icon: RefreshCw, color: "#059669" },
