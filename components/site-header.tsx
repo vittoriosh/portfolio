@@ -29,7 +29,7 @@ function NavLink({
             <span className="text-white/45 text-[12px] font-bold uppercase tracking-[0.18em] group-hover:text-white group-hover:translate-x-0.5 transition-all">
                 {children}
             </span>
-            <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all text-orange-500" />
+            <ArrowUpRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-all text-navy" />
         </>
     );
     if (href) {
@@ -247,7 +247,7 @@ export default function SiteHeader({
                                         transition={{ duration: 0.3 }}
                                     >
                                         {isNavOpen ? (
-                                            <X className="h-4 w-4 md:h-5 md:w-5 text-orange-500" />
+                                            <X className="h-4 w-4 md:h-5 md:w-5 text-navy" />
                                         ) : (
                                             <Menu className="h-4 w-4 md:h-5 md:w-5" />
                                         )}

@@ -43,8 +43,8 @@ export default function ContactContent() {
                             className="group flex items-center justify-between rounded-[1.5rem] border border-black/10 bg-white p-5 shadow-sm transition-shadow hover:shadow-md md:p-6"
                         >
                             <span className="flex items-center gap-4">
-                                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                                    <Icon className="h-5 w-5 text-orange-600" />
+                                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-navy/15 bg-navy/5">
+                                    <Icon className="h-5 w-5 text-navy" />
                                 </span>
                                 <span>
                                     <span className="block text-[10px] font-semibold uppercase tracking-[0.2em] text-black/35">

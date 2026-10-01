@@ -12,9 +12,9 @@ export const PROFILE = {
         detail: "Remote — Southampton Financial (SHF) is based in Toronto. There is no SHF office story in Montreal.",
     },
 
-    bio: "Product engineer. Cares about product management and building. Mostly insurance tech; also contracts and personal projects. Likes hard problems — figuring systems out, improving products. Good with open problems and little supervision.",
+    bio: "Product engineer with experience across product, design, and engineering. Cares about product management and building. Mostly insurance tech; also contracts and personal projects. Likes hard problems — figuring systems out, improving products. Good with open problems and little supervision.",
 
-    personal: "Big on endurance sports — triathlons and marathons every summer, loves the community. Chelsea fan.",
+    personal: "Big on endurance sports — triathlons and marathons every summer, loves the community. Ran an ultramarathon with only 3 months of training. Has dyslexia. Chelsea fan.",
 
     contact: {
         email: "vittorio.shiffman@gmail.com",

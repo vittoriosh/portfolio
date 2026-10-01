@@ -43,6 +43,49 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+@theme {
+  /* Site accent: matches the bike's dark blue frame paint. */
+  --color-navy: #0b1f45;
+
+  /* Entrance animations that run from CSS, before any JavaScript loads. */
+  --animate-fade-up: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Vertical logo marquee on the home page: content is duplicated, so -50% loops seamlessly. */
+  --animate-marquee-up: marquee-up 36s linear infinite;
+
+  @keyframes marquee-up {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-50%);
+    }
+  }
+}
+
 :root {
   --radius: 0.625rem;
   /* Wood & Ocean inspired light theme */

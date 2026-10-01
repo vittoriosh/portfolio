@@ -11,7 +11,7 @@ const LOGOS = [
     { src: "/company_logos/portOptixLogo.png", alt: "PortOptix" },
 ];
 
-const STEPS: {
+export const STEPS: {
     title: string;
     when: string;
     team?: number;

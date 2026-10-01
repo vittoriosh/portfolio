@@ -7,7 +7,7 @@ import { ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
     return (
-        <div className="fixed inset-0 z-[1000] bg-white flex items-center justify-center p-6 selection:bg-orange-500 selection:text-white">
+        <div className="fixed inset-0 z-[1000] bg-white flex items-center justify-center p-6 selection:bg-navy selection:text-white">
             {/* Background radial gradient */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_0%,transparent_100%)] pointer-events-none" />
 
@@ -33,7 +33,7 @@ export default function NotFound() {
 
                 <div className="-mt-12 md:-mt-20">
                     <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-black mb-6">
-                        Page Not <span className="text-orange-500 italic font-serif">Found</span>
+                        Page Not <span className="text-navy italic font-serif">Found</span>
                     </h1>
 
                     <p className="text-lg md:text-xl text-black/50 font-light leading-relaxed max-w-sm mx-auto mb-12">

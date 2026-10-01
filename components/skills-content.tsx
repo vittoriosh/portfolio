@@ -61,7 +61,7 @@ const ICONS: Record<string, { icon: IconType | typeof Cloud; color: string }> = 
     git: { icon: SiGit, color: "#F05032" },
 };
 
-function SkillGrid({ skills }: { skills: readonly ProfileSkill[] }) {
+export function SkillGrid({ skills }: { skills: readonly ProfileSkill[] }) {
     return (
         <div className="flex flex-wrap gap-2.5">
             {skills.map((skill) => {
@@ -118,8 +118,8 @@ export default function SkillsContent({ onAskAi }: { onAskAi?: () => void }) {
 
             <div className="mt-10 flex max-w-2xl flex-col gap-4 rounded-[1.5rem] border border-black/10 bg-black/[0.02] p-6 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-start gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-orange-200 bg-orange-50">
-                        <MessageCircleQuestion className="h-5 w-5 text-orange-600" />
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-navy/15 bg-navy/5">
+                        <MessageCircleQuestion className="h-5 w-5 text-navy" />
                     </span>
                     <p className="text-[14px] leading-relaxed text-black/60">
                         Want to know his experience with any of these? Ask the AI, or look at{" "}
@@ -134,7 +134,7 @@ export default function SkillsContent({ onAskAi }: { onAskAi?: () => void }) {
                     <button
                         type="button"
                         onClick={onAskAi}
-                        className="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-black px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-orange-600 sm:self-auto"
+                        className="inline-flex shrink-0 items-center gap-2 self-start rounded-full bg-black px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-navy sm:self-auto"
                     >
                         Ask Vitto AI
                         <ArrowUpRight className="h-3.5 w-3.5" />
