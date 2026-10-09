@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { ArrowUpRight, Linkedin, Mail, Route } from "lucide-react";
+import { Linkedin, Mail } from "lucide-react";
 
 const BibScene = dynamic(() => import("@/components/bib-scene"), { ssr: false });
 
-export default function AboutContent({ onRoadmap }: { onRoadmap?: () => void }) {
+export default function AboutContent() {
     return (
         <div className="grid items-center gap-6 px-6 pb-16 pt-10 md:grid-cols-[1.1fr_0.9fr] md:gap-4 md:px-10 md:pt-14">
             <div>
@@ -28,26 +28,6 @@ export default function AboutContent({ onRoadmap }: { onRoadmap?: () => void }) 
                 </div>
 
                 <div className="mt-8 flex max-w-2xl flex-wrap items-center gap-x-6 gap-y-3">
-                    {onRoadmap ? (
-                        <button
-                            type="button"
-                            onClick={onRoadmap}
-                            className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/60 hover:text-black"
-                        >
-                            <Route className="h-3.5 w-3.5" />
-                            Career road map
-                            <ArrowUpRight className="h-3.5 w-3.5" />
-                        </button>
-                    ) : (
-                        <Link
-                            href="/roadmap"
-                            className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-black/60 hover:text-black"
-                        >
-                            <Route className="h-3.5 w-3.5" />
-                            Career road map
-                            <ArrowUpRight className="h-3.5 w-3.5" />
-                        </Link>
-                    )}
                     <Link
                         href="https://www.linkedin.com/in/vittorio-shiffman-b711952b7"
                         target="_blank"

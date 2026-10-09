@@ -1,15 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { ArrowDown, ArrowUpRight, Lock } from "lucide-react";
-import { createPortal } from "react-dom";
+import { ArrowUpRight, Lock } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { WORKS } from "@/lib/works";
 
-const BriefcaseScene = dynamic(() => import("@/components/briefcase-scene"), { ssr: false });
 // Case studies are large and only needed once opened.
 const AhaCommercialDetails = dynamic(() => import("@/components/case-studies/aha-commercial"), { ssr: false });
 const RuncostDetails = dynamic(() => import("@/components/case-studies/runcost"), { ssr: false });
@@ -34,113 +32,6 @@ function windowLabel(work: Work) {
     }
 }
 
-const INTRO =
-    "I've worked with companies across insurance, AI, and fintech, and built products of my own along the way. Always building.";
-
-const smoothstep = (t: number) => t * t * (3 - 2 * t);
-
-// The briefcase lives in a fixed overlay so a single 3D canvas can travel. Scroll progress
-// moves it from its slot in the hero up into the nav's dock (#nav-dock), shrinking as it goes.
-function useDockOnScroll(
-    slotRef: React.RefObject<HTMLDivElement | null>,
-    overlayRef: React.RefObject<HTMLDivElement | null>,
-    ready: boolean
-) {
-    useEffect(() => {
-        const root = document.querySelector<HTMLElement>("[data-scroll-root]");
-        const slot = slotRef.current;
-        const overlay = overlayRef.current;
-        if (!root || !slot || !overlay) return;
-        let frame = 0;
-
-        const update = () => {
-            frame = 0;
-            const from = slot.getBoundingClientRect();
-            const dock = document.getElementById("nav-dock")?.getBoundingClientRect();
-            // Fully docked after scrolling ~40% of the hero.
-            const raw = Math.min(1, Math.max(0, root.scrollTop / (root.clientHeight * 0.4)));
-            const p = smoothstep(raw);
-            // Shrink ahead of the move so it's already small by the time it reaches the nav.
-            const shrink = smoothstep(Math.min(1, raw * 1.7));
-            let x = from.left;
-            let y = from.top;
-            let scale = 1;
-            if (dock && dock.width > 0) {
-                const s = Math.min(dock.width / from.width, dock.height / from.height) * 1.35;
-                // Move the box's centre toward the dock's centre, accounting for the current scale.
-                const cur = 1 + (s - 1) * shrink;
-                const fromCx = from.left + from.width / 2;
-                const fromCy = from.top + from.height / 2;
-                const cx = fromCx + (dock.left + dock.width / 2 - fromCx) * p;
-                const cy = fromCy + (dock.top + dock.height / 2 - fromCy) * p;
-                x = cx - (from.width * cur) / 2;
-                y = cy - (from.height * cur) / 2;
-                scale = 1 + (s - 1) * shrink;
-            }
-            overlay.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
-            overlay.style.opacity = "1";
-        };
-        const schedule = () => {
-            if (!frame) frame = requestAnimationFrame(update);
-        };
-
-        update();
-        root.addEventListener("scroll", schedule, { passive: true });
-        window.addEventListener("resize", schedule);
-        // The nav dock animates its width open when the page loads; track it until it settles.
-        const settle = window.setInterval(schedule, 50);
-        const stopSettle = window.setTimeout(() => window.clearInterval(settle), 800);
-        return () => {
-            cancelAnimationFrame(frame);
-            root.removeEventListener("scroll", schedule);
-            window.removeEventListener("resize", schedule);
-            window.clearInterval(settle);
-            window.clearTimeout(stopSettle);
-        };
-    }, [slotRef, overlayRef, ready]);
-}
-
-function Hero() {
-    const slotRef = useRef<HTMLDivElement>(null);
-    const overlayRef = useRef<HTMLDivElement>(null);
-    // The overlay is portalled to <body> so page-transition transforms on ancestors can't
-    // throw off its fixed positioning.
-    const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
-    useDockOnScroll(slotRef, overlayRef, mounted);
-
-    return (
-        <section className="flex h-[calc(100dvh-5rem)] flex-col items-center justify-center px-6 pb-40 text-center md:pb-48">
-            {/* Holds the briefcase's place in the layout; the model itself is in the overlay. */}
-            <div ref={slotRef} aria-hidden className="h-[104px] w-[170px] md:h-[140px] md:w-[224px]" />
-            {mounted &&
-                createPortal(
-                    <div
-                        ref={overlayRef}
-                        aria-hidden
-                        className="pointer-events-none fixed left-0 top-0 z-[60] h-[104px] w-[170px] origin-top-left opacity-0 md:h-[140px] md:w-[224px] [html[data-menu-open]_&]:invisible"
-                    >
-                        <BriefcaseScene className="h-full w-full" />
-                    </div>,
-                    document.body
-                )}
-            <h1 className="mt-2 text-[clamp(4.5rem,13vw,9.5rem)] font-semibold leading-none tracking-[-0.045em]">Work.</h1>
-            <p className="mt-5 max-w-xl text-balance text-[16px] leading-relaxed text-black/50">{INTRO}</p>
-            <button
-                type="button"
-                aria-label="Scroll to the first project"
-                onClick={() => document.getElementById(`work-${WORKS[0].id}`)?.scrollIntoView({ behavior: "smooth" })}
-                className="mt-8 flex flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-black/35 hover:text-black"
-            >
-                Scroll
-                <motion.span animate={{ y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}>
-                    <ArrowDown className="h-4 w-4" />
-                </motion.span>
-            </button>
-        </section>
-    );
-}
-
 function ProjectSection({ work, index, onOpen }: { work: Work; index: number; onOpen: (work: Work) => void }) {
     const imageFirst = index % 2 === 1;
     const url = liveUrl(work);
@@ -149,31 +40,33 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
     return (
         <section
             id={`work-${work.id}`}
-            className="mx-auto grid min-h-[calc(100dvh-5rem)] max-w-5xl scroll-mt-20 grid-rows-[auto_auto] items-center gap-10 px-6 py-16 md:grid-cols-2 md:grid-rows-1 md:gap-14 md:px-10"
+            className={`mx-auto grid min-h-[calc(100dvh-5rem)] max-w-6xl scroll-mt-20 grid-rows-[auto_auto] items-center gap-10 px-6 py-16 md:px-10 lg:grid-rows-1 lg:gap-14 ${
+                imageFirst ? "lg:grid-cols-[6fr_5fr]" : "lg:grid-cols-[5fr_6fr]"
+            }`}
         >
             <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.7, ease: EASE }}
-                className={imageFirst ? "md:order-last" : undefined}
+                className={imageFirst ? "lg:order-last" : undefined}
             >
                 <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
                     {String(index + 1).padStart(2, "0")} / {String(WORKS.length).padStart(2, "0")} · {work.category}
                 </p>
-                <h2 className="mt-4 max-w-xl text-[clamp(2rem,3.4vw,3.25rem)] font-semibold leading-[1.05] tracking-tight">
+                <h2 className="mt-4 max-w-xl text-[clamp(2.25rem,3.8vw,3.75rem)] font-semibold leading-[1.04] tracking-tight">
                     {work.title}
                 </h2>
-                <p className="mt-5 max-w-md text-[16px] leading-relaxed text-black/55">{work.description}</p>
+                <p className="mt-5 max-w-lg text-[17px] leading-relaxed text-black/55">{work.description}</p>
 
                 {"metrics" in work && work.metrics && (
-                    <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4">
+                    <div className="mt-8 flex flex-wrap gap-x-12 gap-y-5">
                         {work.metrics.map((metric) => (
                             <div key={metric.label}>
-                                <p className="text-[clamp(2rem,3.5vw,3rem)] font-semibold leading-none tracking-tight">
+                                <p className="text-[clamp(2.25rem,3.8vw,3.5rem)] font-semibold leading-none tracking-tight">
                                     {metric.value}
                                 </p>
-                                <p className="mt-2 text-[13px] text-black/45">{metric.label}</p>
+                                <p className="mt-2 text-[14px] text-black/45">{metric.label}</p>
                             </div>
                         ))}
                     </div>
@@ -184,7 +77,7 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                         <button
                             type="button"
                             onClick={() => onOpen(work)}
-                            className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-black/35 hover:text-black/60"
+                            className="inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-black/35 hover:text-black/60"
                         >
                             <Lock className="h-3 w-3" />
                             Case study coming soon
@@ -195,7 +88,7 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                                 <button
                                     type="button"
                                     onClick={() => onOpen(work)}
-                                    className="text-[11px] font-semibold uppercase tracking-[0.16em] text-black underline decoration-black/20 underline-offset-4 hover:decoration-black"
+                                    className="text-[12px] font-semibold uppercase tracking-[0.16em] text-black underline decoration-black/20 underline-offset-[6px] hover:decoration-black"
                                 >
                                     View details
                                 </button>
@@ -205,7 +98,7 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                                     href={url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-black/50 underline decoration-black/20 underline-offset-4 hover:text-black hover:decoration-black"
+                                    className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-black/50 underline decoration-black/20 underline-offset-[6px] hover:text-black hover:decoration-black"
                                 >
                                     Visit live site
                                     <ArrowUpRight className="h-3.5 w-3.5" />
@@ -224,26 +117,26 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-                className="group w-full overflow-hidden rounded-xl border border-black/10 bg-white text-left shadow-[0_20px_50px_rgba(0,0,0,0.12)]"
+                className="group w-full overflow-hidden rounded-2xl border border-black/10 bg-white text-left shadow-[0_24px_60px_rgba(0,0,0,0.13)]"
             >
                 {/* Mac-style window chrome: traffic lights and an address pill. */}
-                <div className="flex h-8 items-center gap-1.5 border-b border-black/[0.06] bg-neutral-100 px-3">
+                <div className="flex h-9 items-center gap-1.5 border-b border-black/[0.06] bg-neutral-100 px-3.5">
                     <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
                     <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
                     <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                    <span className="mx-auto flex min-w-0 max-w-[60%] items-center gap-1.5 rounded-md bg-white px-3 py-0.5 text-[11px] text-black/45">
+                    <span className="mx-auto flex min-w-0 max-w-[60%] items-center gap-1.5 rounded-md bg-white px-3 py-0.5 text-[12px] text-black/45">
                         {locked && <Lock className="h-2.5 w-2.5 shrink-0" />}
                         <span className="truncate">{windowLabel(work)}</span>
                     </span>
                     {/* Balances the traffic lights so the address pill stays centred. */}
-                    <span className="w-[42px] shrink-0" />
+                    <span className="w-[48px] shrink-0" />
                 </div>
                 <div className="relative aspect-[16/10] bg-neutral-50">
                     <Image
                         src={work.image}
                         alt=""
                         fill
-                        sizes="(min-width: 1024px) 470px, (min-width: 768px) 45vw, 100vw"
+                        sizes="(min-width: 1152px) 600px, (min-width: 1024px) 54vw, 100vw"
                         className={`object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.02] ${
                             locked ? "opacity-80 grayscale-[30%]" : ""
                         }`}
@@ -266,7 +159,6 @@ export default function WorkPage() {
 
     return (
         <>
-            <Hero />
             {WORKS.map((work, i) => (
                 <ProjectSection key={work.id} work={work} index={i} onOpen={open} />
             ))}

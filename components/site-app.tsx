@@ -3,10 +3,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { Menu, Send, SquarePen, X } from "lucide-react";
+import { ArrowUpRight, Menu, Send, SquarePen, X } from "lucide-react";
 import HelloHeading from "@/components/hello-heading";
 import { PROFILE } from "@/lib/profile";
 
@@ -17,11 +16,10 @@ const HomeSections = dynamic(() => import("@/components/home-sections"));
 const WorkPage = dynamic(() => import("@/components/work-page"));
 const AboutContent = dynamic(() => import("@/components/about-content"));
 const SkillsPage = dynamic(() => import("@/components/skills-page"));
-const RoadmapContent = dynamic(() => import("@/components/roadmap-content"));
 const ContactContent = dynamic(() => import("@/components/contact-content"));
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
-type View = "home" | "chat" | "roadmap" | "work" | "about" | "skills" | "contact";
+type View = "home" | "chat" | "work" | "about" | "skills" | "contact";
 
 // Every view has its own URL. The whole site lives in one persistent layout, so moving between
 // pages keeps the chat history and animates instead of doing a full page load.
@@ -31,7 +29,6 @@ const VIEW_PATHS: Record<View, string> = {
     work: "/work",
     about: "/about",
     skills: "/skills",
-    roadmap: "/roadmap",
     contact: "/contact",
 };
 
@@ -42,7 +39,6 @@ const NAV_SUBTITLES: Record<View, string> = {
     work: "Exploring work",
     about: "About me",
     skills: "Exploring skills",
-    roadmap: "Viewing road map",
     contact: "Get in touch",
 };
 
@@ -101,7 +97,7 @@ const GREETING: ChatMessage = {
     content: "Hi — I'm Vitto AI. Ask me about Vittorio's work, projects, and how to reach him.",
 };
 
-const LINK_PATTERN = /(https?:\/\/[^\s]+)|([\w.+-]+@[\w-]+\.[\w.-]+)|(\/roadmap\b)/g;
+const LINK_PATTERN = /(https?:\/\/[^\s]+)|([\w.+-]+@[\w-]+\.[\w.-]+)/g;
 const TRAILING_PUNCT = /[).,;:!?]+$/;
 
 function linkifyMessage(text: string): React.ReactNode[] {
@@ -121,30 +117,18 @@ function linkifyMessage(text: string): React.ReactNode[] {
         const trail = trailMatch ? trailMatch[0] : "";
         const value = trail ? raw.slice(0, raw.length - trail.length) : raw;
 
-        if (value.startsWith("/roadmap")) {
-            parts.push(
-                <NextLink
-                    key={key++}
-                    href={value}
-                    className="font-medium text-black underline decoration-black/25 underline-offset-2 hover:decoration-black"
-                >
-                    {value}
-                </NextLink>
-            );
-        } else {
-            const isEmail = value.includes("@") && !value.startsWith("http");
-            parts.push(
-                <a
-                    key={key++}
-                    href={isEmail ? `mailto:${value}` : value}
-                    target={isEmail ? undefined : "_blank"}
-                    rel={isEmail ? undefined : "noopener noreferrer"}
-                    className="font-medium text-black underline decoration-black/25 underline-offset-2 hover:decoration-black"
-                >
-                    {value}
-                </a>
-            );
-        }
+        const isEmail = value.includes("@") && !value.startsWith("http");
+        parts.push(
+            <a
+                key={key++}
+                href={isEmail ? `mailto:${value}` : value}
+                target={isEmail ? undefined : "_blank"}
+                rel={isEmail ? undefined : "noopener noreferrer"}
+                className="font-medium text-black underline decoration-black/25 underline-offset-2 hover:decoration-black"
+            >
+                {value}
+            </a>
+        );
 
         if (trail) parts.push(trail);
         lastIndex = end;
@@ -158,7 +142,6 @@ const MENU: { label: string; view: View }[] = [
     { label: "Work", view: "work" },
     { label: "About", view: "about" },
     { label: "Skills", view: "skills" },
-    { label: "Road map", view: "roadmap" },
 ];
 
 export default function SiteApp() {
@@ -175,12 +158,6 @@ export default function SiteApp() {
     // Once the visitor scrolls past the opening view, the chat input becomes a slim floating bar
     // (on the home page it detaches from the hero; on other pages it replaces the water card).
     const [scrolled, setScrolled] = useState(false);
-
-    // Lets things outside this tree (like the Work page's floating briefcase) hide under the menu.
-    useEffect(() => {
-        document.documentElement.toggleAttribute("data-menu-open", menuOpen);
-        return () => document.documentElement.removeAttribute("data-menu-open");
-    }, [menuOpen]);
 
     useEffect(() => {
         if (!menuOpen) return;
@@ -328,15 +305,6 @@ export default function SiteApp() {
                             </span>
                         </span>
                     </button>
-                    {/* Dock for the Work page's briefcase, which flies up here as you scroll. */}
-                    <motion.span
-                        id="nav-dock"
-                        aria-hidden
-                        initial={false}
-                        animate={{ width: view === "work" ? 36 : 0 }}
-                        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                        className="block h-7 shrink-0"
-                    />
                     <button
                         type="button"
                         onClick={() => {
@@ -386,34 +354,29 @@ export default function SiteApp() {
                                     {item.label}
                                 </motion.button>
                             ))}
-                            {/* Contact links with 3D-rendered icons (pre-rendered PNGs from 3D models). */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, transition: { duration: 0.15 } }}
                                 transition={{ delay: 0.15 + MENU.length * 0.07, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                                className="mt-6 flex items-center gap-6 md:mt-10"
+                                className="mt-10 flex items-center gap-6 border-t border-black/10 pt-8 md:mt-14"
                             >
                                 {[
-                                    { href: `mailto:${PROFILE.contact.email}`, src: "/icons/email-3d.png", label: "Email" },
-                                    { href: PROFILE.contact.linkedin, src: "/icons/linkedin-3d.png", label: "LinkedIn" },
-                                ].map((link) => (
-                                    <a
-                                        key={link.src}
-                                        href={link.href}
-                                        target={link.href.startsWith("http") ? "_blank" : undefined}
-                                        rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                                        className="group flex items-center gap-2.5 rounded-full py-2 pl-2 pr-4 text-[14px] font-medium text-black/60 transition-colors hover:bg-black/5 hover:text-black"
-                                    >
-                                        <Image
-                                            src={link.src}
-                                            alt=""
-                                            width={40}
-                                            height={40}
-                                            className="h-10 w-10 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:scale-110"
-                                        />
-                                        {link.label}
-                                    </a>
+                                    { href: `mailto:${PROFILE.contact.email}`, label: "Email" },
+                                    { href: PROFILE.contact.linkedin, label: "LinkedIn" },
+                                ].map((link, i) => (
+                                    <React.Fragment key={link.label}>
+                                        {i > 0 && <span aria-hidden className="h-3 w-px bg-black/15" />}
+                                        <a
+                                            href={link.href}
+                                            target={link.href.startsWith("http") ? "_blank" : undefined}
+                                            rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-[0.18em] text-black/55 underline decoration-black/20 underline-offset-[6px] transition-colors hover:text-black hover:decoration-black"
+                                        >
+                                            {link.label}
+                                            <ArrowUpRight className="h-3.5 w-3.5" />
+                                        </a>
+                                    </React.Fragment>
                                 ))}
                             </motion.div>
                         </nav>
@@ -552,15 +515,11 @@ export default function SiteApp() {
                         </div>
                     )}
                 </section>
-            ) : view === "roadmap" ? (
-                <div className="mx-auto max-w-5xl">
-                    <RoadmapContent showHomeLink={false} />
-                </div>
             ) : view === "work" ? (
                 <WorkPage />
             ) : view === "about" ? (
                 <div className="mx-auto max-w-5xl">
-                    <AboutContent onRoadmap={() => openView("roadmap")} />
+                    <AboutContent />
                 </div>
             ) : view === "skills" ? (
                 <SkillsPage onAskAi={() => openView("chat")} />

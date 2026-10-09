@@ -99,10 +99,10 @@ export const PROFILE = {
         },
         {
             id: "runcost",
-            title: "runCost",
+            title: "AutoSpend (formerly runCost)",
             url: "https://www.autospend.app/",
             summary:
-                "A Canadian vehicle research platform on 10,000+ cars — IBC claim indexes, NRCan fuel ratings, and NHTSA safety data, with AI Q&A wired through Claude, Gemini, and ChatGPT. ~500+ monthly traffic.",
+                "A Canadian car research tool on 22,000+ vehicle records (1995–2026) joining NRCan fuel ratings, IBC insurance claim and theft indexes, NHTSA crash ratings, driver-assist equipment and recalls, and 2,200+ IIHS, AJAC and NRCan awards. Features compare (up to four cars), an AI-style search that writes a plain-language summary of each car, yearly top-car rankings and Top 20 lists, and charts on fuel cost, theft, insurance and EV range. Built on his Meadow design system with Next.js, React, TypeScript and Python, using Cursor, Claude Code, Claude, Gemini and ChatGPT. ~500+ monthly traffic.",
         },
     ],
 
@@ -134,11 +134,10 @@ export const PROFILE = {
     ],
 
     siteNav: {
-        work: "Selected projects and details (Aha commercial, runCost, Matchday, Homedraft). VirtuMed and PortOptix aren't public yet.",
+        work: "Selected projects and details (Aha commercial, AutoSpend, Matchday, Homedraft). VirtuMed and PortOptix aren't public yet.",
         about: "Bio, Montreal remote, SHF in Toronto, LinkedIn and email.",
         skills: "Icons for his product management skills (strategy, roadmapping, agile, requirements, stakeholder management, Jira) and his technical tools. No per-skill ratings on this page on purpose — ask the assistant or check a project's details for how a skill was actually used.",
         contact: "Email and LinkedIn.",
-        roadmap: "Career steps from VirtuMed through SHF, contracts, Homedraft, Matchday.",
     },
 } as const;
 

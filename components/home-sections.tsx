@@ -4,10 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { PROFILE } from "@/lib/profile";
 import { SkillGrid } from "@/components/skills-content";
-import { STEPS } from "@/components/roadmap-content";
 
 
-type SectionView = "work" | "skills" | "roadmap";
+type SectionView = "work" | "skills";
 
 // Same shape as the About section on the home page: half visual, half big-type copy.
 function SplitSection({
@@ -183,41 +182,11 @@ function SkillsSection({ onOpen }: { onOpen: (view: SectionView) => void }) {
     );
 }
 
-function RoadmapSection({ onOpen }: { onOpen: (view: SectionView) => void }) {
-    return (
-        <SplitSection
-            label="Road map"
-            heading="Eight milestones, built alongside a full-time role."
-            cta="See the full road map"
-            onCta={() => onOpen("roadmap")}
-            visual={
-                <div className="w-full px-6 md:px-12">
-                <ol className="max-w-lg border-t border-black/10">
-                    {STEPS.map((step, i) => (
-                        <li
-                            key={step.title}
-                            className="grid grid-cols-[2.25rem_1fr_auto] items-baseline gap-3 border-b border-black/10 py-3"
-                        >
-                            <span className="font-mono text-[11px] text-black/30">{String(i + 1).padStart(2, "0")}</span>
-                            <span className="text-[15px] font-medium tracking-tight">{step.title}</span>
-                            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-black/35">
-                                {step.when}
-                            </span>
-                        </li>
-                    ))}
-                </ol>
-                </div>
-            }
-        />
-    );
-}
-
 export default function HomeSections({ onOpen }: { onOpen: (view: SectionView) => void }) {
     return (
         <>
             <CompaniesSection onOpen={onOpen} />
             <SkillsSection onOpen={onOpen} />
-            <RoadmapSection onOpen={onOpen} />
         </>
     );
 }

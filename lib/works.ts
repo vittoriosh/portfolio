@@ -18,13 +18,13 @@ export const WORKS = [
     },
     {
         id: "runcost",
-        title: "runCost",
+        title: "AutoSpend",
         category: "Personal Project",
-        image: "/images/runcost-charts.jpg",
-        color: "from-neutral-800/20",
-        description: "Built a Canadian vehicle research platform on 10,000+ cars, stitching IBC claim indexes, NRCan fuel ratings, and NHTSA safety data — with AI Q&A wired through Claude, Gemini, and ChatGPT.",
+        image: "/images/autospend/autospend-home.jpg",
+        color: "from-lime-700/20",
+        description: "Built a Canadian car research tool on 22,000+ vehicle records, joining NRCan fuel ratings, IBC insurance claim and theft indexes, NHTSA crash ratings and recalls, and 2,200+ IIHS and AJAC awards into plain-language compare, search, rankings and charts.",
         metrics: [
-            { value: "10k+", label: "Cars in dataset" },
+            { value: "22k+", label: "Vehicle records" },
             { value: "500+", label: "Monthly traffic" },
         ],
         logos: [

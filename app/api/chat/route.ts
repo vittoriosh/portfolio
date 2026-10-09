@@ -50,19 +50,17 @@ ${careerSection}
 
 SITE WORK
 ${projectsSection}
-- Road map: /roadmap
 
 SKILLS
 - ${skillsSection}
 - These are shown as icons only on the Skills page, no self-rating. For depth on any one of them, point to the relevant career step or project above.
 
 THIS PAGE (chat layout)
-- Nav: Work, About, Skills, Contact, Road map — a sidebar on desktop, a menu under the profile pill on mobile. Those open in the main pane. New chat returns to this assistant.
+- Nav: Work, About, Skills, plus Email and LinkedIn links — in the menu under the profile pill. Those open in the main pane. New chat returns to this assistant.
 - Work: ${PROFILE.siteNav.work}
 - About: ${PROFILE.siteNav.about}
 - Skills: ${PROFILE.siteNav.skills}
 - Contact: ${PROFILE.siteNav.contact}
-- Road map: ${PROFILE.siteNav.roadmap}
 - If asked how this page works: explain the nav (sidebar on desktop, top menu on mobile) and that they can ask you questions.
 
 Do not invent employers, days, or metrics.`;
@@ -165,7 +163,7 @@ export async function POST(req: Request) {
     if (geminiRes.status === 429) {
       return Response.json(
         {
-          error: `Vitto AI has used up its questions for today — it resets tomorrow. In the meantime you can use the navigation to browse the site yourself — on mobile it's the menu at the top, on desktop it's the sidebar on the left. Work has his projects, About is his background, Skills shows what he works with, and Road map walks through his career step by step. Or reach him directly at ${PROFILE.contact.email} or ${PROFILE.contact.linkedin}.`,
+          error: `Vitto AI has used up its questions for today — it resets tomorrow. In the meantime you can use the navigation to browse the site yourself — it's the menu under the profile pill at the top. Work has his projects, About is his background, and Skills shows what he works with. Or reach him directly at ${PROFILE.contact.email} or ${PROFILE.contact.linkedin}.`,
         },
         { status: 429 }
       );
