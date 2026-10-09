@@ -43,8 +43,8 @@ const NAV_SUBTITLES: Record<View, string> = {
 };
 
 // Pages that open with a full-screen hero get the big water chat card until you scroll; the
-// rest are plain content pages and use the slim floating chat bar from the start.
-const HERO_VIEWS: View[] = ["home", "work", "skills"];
+// rest (including Work) use the slim floating chat bar from the start.
+const HERO_VIEWS: View[] = ["home", "skills"];
 
 // Defers heavy content below the fold (the 3D bike: three.js plus its model) so it doesn't
 // compete with the first paint. It mounts once the browser is idle after load, or as soon as

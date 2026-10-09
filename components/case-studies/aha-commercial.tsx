@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, BarChart3, Code2, CreditCard, Layers, Network, ScrollText } from "lucide-react";
 import {
     Accordion,
     AccordionContent,
@@ -17,6 +18,41 @@ interface CaseStudyProps {
 const triggerClass =
     "py-5 text-[15px] font-medium text-black hover:no-underline [&[data-state=open]>svg]:rotate-180";
 const bodyClass = "text-[15px] leading-relaxed text-black/55 pb-6";
+
+/** The headline contributions, shown first so the scope is clear before the detail. */
+const BUILT = [
+    {
+        icon: Code2,
+        title: "Production codebase, 0 to 1",
+        body: "Built the production codebase from an empty repo to a live product that quotes, rates and binds commercial policies online.",
+    },
+    {
+        icon: ScrollText,
+        title: "Underwriting turned into a data model",
+        body: "Sat down with insurance and underwriting people to learn how risks are actually assessed, then turned that process into a working data model that rates online.",
+    },
+    {
+        icon: CreditCard,
+        title: "Payment API",
+        body: "Integrated the payment processor's API so a customer can pay and bind in the same flow, with the extra policy-holder fields it requires.",
+    },
+    {
+        icon: Network,
+        title: "Process flow and architecture",
+        body: "Designed how a quote moves through the system, from the frontend to the backend to Salesforce, with one policy ID from first save to bind.",
+        flow: ["Frontend", "Backend", "Salesforce"],
+    },
+    {
+        icon: BarChart3,
+        title: "Built-in analytics dashboard",
+        body: "Built an analytics dashboard on quote-level tracking, so the team could see completion and drop-off without relying on site analytics alone.",
+    },
+    {
+        icon: Layers,
+        title: "Architecture for carrier onboarding",
+        body: "Structured the platform so new carriers can be onboarded easily, instead of rebuilding the flow for each one.",
+    },
+] as const;
 
 export default function AhaCommercialDetails({ onClose }: CaseStudyProps) {
     return (
@@ -48,14 +84,68 @@ export default function AhaCommercialDetails({ onClose }: CaseStudyProps) {
                     .
                 </p>
 
-                <dl className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 border-y border-black/10 py-6 text-sm">
+                <div className="mt-10 overflow-hidden rounded-2xl border border-black/10 bg-neutral-50">
+                    <Image
+                        src="/images/aha-commercial-hero.png"
+                        alt="Aha commercial insurance quote flow — Let's get started"
+                        width={2880}
+                        height={1800}
+                        priority
+                        sizes="(min-width: 768px) 720px, 100vw"
+                        className="h-auto w-full"
+                    />
+                </div>
+
+                <section className="mt-14" aria-labelledby="built-heading">
+                    <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">What I built</p>
+                    <h2 id="built-heading" className="mt-2 text-2xl md:text-3xl font-semibold tracking-tight leading-tight">
+                        From first interview to policies bound online.
+                    </h2>
+                    <ol className="mt-8 grid gap-px overflow-hidden rounded-2xl border border-black/10 bg-black/10 md:grid-cols-2">
+                        {BUILT.map((item, i) => {
+                            const Icon = item.icon;
+                            return (
+                                <motion.li
+                                    key={item.title}
+                                    initial={{ opacity: 0, y: 12 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.25 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                    className="flex flex-col bg-white p-6"
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
+                                            <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                                        </span>
+                                        <span className="font-mono text-[11px] text-black/25">{String(i + 1).padStart(2, "0")}</span>
+                                    </div>
+                                    <h3 className="mt-5 text-[17px] font-semibold tracking-tight">{item.title}</h3>
+                                    <p className="mt-2 text-[14px] leading-relaxed text-black/55">{item.body}</p>
+                                    {"flow" in item && (
+                                        <div className="mt-4 flex flex-wrap items-center gap-1">
+                                            {item.flow.map((step, j) => (
+                                                <React.Fragment key={step}>
+                                                    {j > 0 && <ArrowRight className="h-3 w-3 text-black/30" />}
+                                                    <span className="rounded-full border border-black/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.06em] text-black/70">
+                                                        {step}
+                                                    </span>
+                                                </React.Fragment>
+                                            ))}
+                                        </div>
+                                    )}
+                                </motion.li>
+                            );
+                        })}
+                    </ol>
+                </section>
+
+                <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-6 border-y border-black/10 py-6 text-sm">
                     <div>
                         <dt className="text-[11px] uppercase tracking-[0.16em] text-black/35">Timeline</dt>
                         <dd className="mt-1 text-[15px] text-black/80">Discovery to production in under 6 months</dd>
                     </div>
                     <div>
                         <dt className="text-[11px] uppercase tracking-[0.16em] text-black/35">Outcomes</dt>
-                        <dd className="mt-1 text-[15px] text-black/80">200+ policies bound · 1,500+ leads</dd>
+                        <dd className="mt-1 text-[15px] text-black/80">100+ policies bound · 1,500+ leads</dd>
                     </div>
                     <div>
                         <dt className="text-[11px] uppercase tracking-[0.16em] text-black/35">Completion</dt>
@@ -162,7 +252,7 @@ export default function AhaCommercialDetails({ onClose }: CaseStudyProps) {
                         <AccordionContent className={bodyClass}>
                             <ul className="space-y-2 text-black/70">
                                 <li>Shipped quote and bind in under six months from first interviews</li>
-                                <li>200+ policies bound online</li>
+                                <li>100+ policies bound online</li>
                                 <li>1,500+ leads into Salesforce</li>
                                 <li>Completion above 80% after the occupation matching change</li>
                             </ul>

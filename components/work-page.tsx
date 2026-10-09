@@ -18,6 +18,7 @@ type Work = (typeof WORKS)[number];
 const hasCaseStudy = (work: Work) => "caseStudy" in work && Boolean(work.caseStudy);
 const liveUrl = (work: Work) => ("url" in work ? work.url : undefined);
 const isLocked = (work: Work) => "locked" in work && Boolean(work.locked);
+const workImage = (work: Work) => ("image" in work ? work.image : undefined);
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -35,6 +36,7 @@ function windowLabel(work: Work) {
 function ProjectSection({ work, index, onOpen }: { work: Work; index: number; onOpen: (work: Work) => void }) {
     const imageFirst = index % 2 === 1;
     const url = liveUrl(work);
+    const image = workImage(work);
     const locked = isLocked(work) && !url && !hasCaseStudy(work);
 
     return (
@@ -52,7 +54,7 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                 className={imageFirst ? "lg:order-last" : undefined}
             >
                 <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-black/35">
-                    {String(index + 1).padStart(2, "0")} / {String(WORKS.length).padStart(2, "0")} · {work.category}
+                    {String(index + 1).padStart(2, "0")} · {work.type === "professional" ? "Enterprise" : "Personal"}
                 </p>
                 <h2 className="mt-4 max-w-xl text-[clamp(2.25rem,3.8vw,3.75rem)] font-semibold leading-[1.04] tracking-tight">
                     {work.title}
@@ -77,10 +79,10 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                         <button
                             type="button"
                             onClick={() => onOpen(work)}
-                            className="inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.16em] text-black/35 hover:text-black/60"
+                            className="inline-flex items-center gap-2.5 border border-black bg-black px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-white transition-colors hover:bg-black/85"
                         >
-                            <Lock className="h-3 w-3" />
-                            Case study coming soon
+                            <Lock className="h-3.5 w-3.5" />
+                            Locked · Coming soon
                         </button>
                     ) : (
                         <>
@@ -112,35 +114,63 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
             <motion.button
                 type="button"
                 onClick={() => (locked || hasCaseStudy(work) ? onOpen(work) : url && window.open(url, "_blank", "noopener,noreferrer"))}
-                aria-label={`Open ${work.title}`}
+                aria-label={locked ? `${work.title} — locked, coming soon` : `Open ${work.title}`}
                 initial={{ opacity: 0, y: 28, scale: 0.98 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.8, delay: 0.08, ease: EASE }}
-                className="group w-full overflow-hidden rounded-2xl border border-black/10 bg-white text-left shadow-[0_24px_60px_rgba(0,0,0,0.13)]"
+                className={`group w-full overflow-hidden rounded-2xl border bg-white text-left shadow-[0_24px_60px_rgba(0,0,0,0.13)] ${
+                    locked ? "border-black/25" : "border-black/10"
+                }`}
             >
                 {/* Mac-style window chrome: traffic lights and an address pill. */}
                 <div className="flex h-9 items-center gap-1.5 border-b border-black/[0.06] bg-neutral-100 px-3.5">
                     <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
                     <span className="h-3 w-3 rounded-full bg-[#febc2e]" />
                     <span className="h-3 w-3 rounded-full bg-[#28c840]" />
-                    <span className="mx-auto flex min-w-0 max-w-[60%] items-center gap-1.5 rounded-md bg-white px-3 py-0.5 text-[12px] text-black/45">
+                    <span
+                        className={`mx-auto flex min-w-0 max-w-[60%] items-center gap-1.5 rounded-md px-3 py-0.5 text-[12px] ${
+                            locked ? "bg-black text-white" : "bg-white text-black/45"
+                        }`}
+                    >
                         {locked && <Lock className="h-2.5 w-2.5 shrink-0" />}
-                        <span className="truncate">{windowLabel(work)}</span>
+                        <span className="truncate">{locked ? "Locked" : windowLabel(work)}</span>
                     </span>
                     {/* Balances the traffic lights so the address pill stays centred. */}
                     <span className="w-[48px] shrink-0" />
                 </div>
-                <div className="relative aspect-[16/10] bg-neutral-50">
-                    <Image
-                        src={work.image}
-                        alt=""
-                        fill
-                        sizes="(min-width: 1152px) 600px, (min-width: 1024px) 54vw, 100vw"
-                        className={`object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.02] ${
-                            locked ? "opacity-80 grayscale-[30%]" : ""
-                        }`}
-                    />
+                <div className="relative aspect-[16/10] bg-neutral-100">
+                    {image ? (
+                        <Image
+                            src={image}
+                            alt=""
+                            fill
+                            sizes="(min-width: 1152px) 600px, (min-width: 1024px) 54vw, 100vw"
+                            className={`object-cover object-left-top transition-transform duration-700 ease-out group-hover:scale-[1.02] ${
+                                locked ? "opacity-50 grayscale" : ""
+                            }`}
+                        />
+                    ) : (
+                        <div className="absolute inset-0 bg-[radial-gradient(#d4d4d4_1px,transparent_1px)] [background-size:16px_16px]" />
+                    )}
+                    {locked && (
+                        <div className={`absolute inset-0 flex flex-col items-center justify-center gap-3 ${image ? "bg-black/25" : "bg-neutral-200/80"}`}>
+                            <span
+                                className={`flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg ${
+                                    image ? "border border-white/40 bg-black/70 backdrop-blur-sm" : "border border-black/15 bg-black"
+                                }`}
+                            >
+                                <Lock className="h-6 w-6" strokeWidth={2.25} />
+                            </span>
+                            <span
+                                className={`text-[11px] font-semibold uppercase tracking-[0.2em] ${
+                                    image ? "text-white drop-shadow-sm" : "text-black/55"
+                                }`}
+                            >
+                                {image ? "Coming soon" : "Screenshot coming soon"}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </motion.button>
         </section>
