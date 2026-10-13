@@ -95,7 +95,8 @@ function ProjectSection({ work, index, onOpen }: { work: Work; index: number; on
                                     View details
                                 </button>
                             )}
-                            {url && (
+                            {/* Projects with a case study link to the live site from inside it instead. */}
+                            {url && !hasCaseStudy(work) && (
                                 <a
                                     href={url}
                                     target="_blank"
