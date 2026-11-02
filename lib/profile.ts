@@ -93,7 +93,6 @@ export const PROFILE = {
         {
             id: "south-hampton",
             title: "Commercial Insurance Application",
-            url: "https://commercial.ahainsurance.ca/",
             summary:
                 "Built at SHF. A 0-to-1 commercial insurance platform — quote and bind coverage online. Frontend → MuleSoft → backend → Salesforce. 100+ policies bound, 1,500+ leads generated.",
         },

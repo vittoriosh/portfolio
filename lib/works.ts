@@ -10,8 +10,6 @@ export const WORKS = [
             { value: "100+", label: "Policies bound" },
             { value: "1,500+", label: "Leads generated" },
         ],
-        url: "https://commercial.ahainsurance.ca/",
-        liveLabel: "Live",
         caseStudy: true,
         cta: "View details",
         type: "professional",

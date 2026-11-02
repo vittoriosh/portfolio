@@ -8,7 +8,7 @@ const careerSection = PROFILE.career
     .join("\n");
 
 const projectsSection = PROFILE.projects
-    .map((p) => `- ${p.title} live ${p.url} ${p.summary}`)
+    .map((p) => `- ${p.title}${"url" in p ? ` live ${p.url}` : ""} ${p.summary}`)
     .join("\n");
 
 const skillsSection = PROFILE.skills.map((s) => s.name).join(", ");

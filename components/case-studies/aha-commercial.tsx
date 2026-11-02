@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight, BarChart3, Code2, CreditCard, Layers, Network, ScrollText } from "lucide-react";
+import { ArrowLeft, ArrowRight, BarChart3, Code2, CreditCard, Layers, Network, ScrollText } from "lucide-react";
 import {
     Accordion,
     AccordionContent,
@@ -14,8 +14,6 @@ import {
 interface CaseStudyProps {
     onClose: (nextId?: string) => void;
 }
-
-const LIVE_URL = "https://commercial.ahainsurance.ca/";
 
 const triggerClass =
     "py-5 text-[15px] font-medium text-black hover:no-underline [&[data-state=open]>svg]:rotate-180";
@@ -515,15 +513,6 @@ export default function AhaCommercialDetails({ onClose }: CaseStudyProps) {
                     </Accordion>
 
                     <div className="mt-12 flex flex-wrap items-center gap-3">
-                        <a
-                            href={LIVE_URL}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em] text-white"
-                        >
-                            Open live
-                            <ArrowUpRight className="h-3.5 w-3.5" />
-                        </a>
                         <button
                             onClick={() => onClose()}
                             className="inline-flex items-center rounded-full border border-black/20 px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.16em]"
